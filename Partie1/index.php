@@ -123,7 +123,7 @@
     <div class="container-fluid">
 
         <div class="d-flex align-items-start">
-            <div class="nav flex-column nav-pills me-3"  id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <div class="nav flex-column nav-pills me-3"  id="v-pills-tab" role="tablist">
                 <a class="nav-link active" id="v-pills-clients-tab" data-bs-toggle="pill" href="#v-pills-clients" role="tab">Ex 1 - Liste des clients</a>
                 <a class="nav-link" id="v-pills-shows-tab" data-bs-toggle="pill" href="#v-pills-shows" role="tab">Ex 2 - Types de spectacles</a>
                 <a class="nav-link" id="v-pills-first20Clients-tab" data-bs-toggle="pill" href="#v-pills-first20Clients" role="tab">Ex 3 - 20 Premiers clients</a>
@@ -268,7 +268,7 @@
                     </table>
                 </div>
 
-                <div class="tab-pane fade" id="v-pills-clientsByM" role="tabpanel"
+                <div class="tab-pane fade" id="v-pills-clientsByM" role="tabpanel">
 
                     <?php foreach($clientsByM as $client): ?>
 
@@ -324,6 +324,7 @@
                 </div>
             </div>
         </div>
+        
 
     </div>
 
