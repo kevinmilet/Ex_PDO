@@ -2,10 +2,18 @@
 include ('views/templates/head.php');
 ?>
 <h1 class="text-center m-3">Cabinet du Dr Lapeluche</h1>
-<h2 class="text-center m-3">Enregistrer un nouveau patient</h2>
 
-<div class="text-center">
-    <a href="ajout-patient.php" type="button" class="btn btn-primary">Ajouter un patient</a>
+<div >
+    <ul class="nav flex-column">
+        <li>
+            <a class="nav-link" href="ajout-patient.php"><i class="fas fa-users-medical"></i> Ajouter un patient</a>
+        </li>
+        <li>
+            <a class="nav-link" href="liste-patient.php"><i class="far fa-list-alt"></i> Liste des patients</a>
+        </li>
+
+    </ul>
+    
 </div>
 
 <?php

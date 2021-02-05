@@ -44,7 +44,7 @@
         <div class="col-md-4"></div>
 </div>
 <div class="mt-3">
-    <a href="index.php" type="button" class="btn btn-secondary">Retour à l'accueil</a>
     <button type="submit" class="btn btn-primary">Enregistrer</button>
 </div>
 </form>
+

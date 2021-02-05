@@ -2,6 +2,16 @@ html, body {
     background-color: #eeeeee;
 }
 
+li a, a {
+    color: #212529;
+    text-decoration: none;
+}
+
+
+
+li a:hover, li a:hover {
+    color: #0A58CA;
+}
 .container-form {
     margin-top: 10px;
     border-radius: 3px;

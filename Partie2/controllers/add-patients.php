@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($errors)) {
             include ('views/form.php');
 
         } catch (PDOException $e){
-            echo '<div class="alert alert-danger">'.$e->getMessage().'</div>';
+            echo '<div class="alert alert-danger">La requête  échouée: '.$e->getMessage().'</div>';
         }
 
     } else {
