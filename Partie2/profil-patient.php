@@ -1,7 +1,7 @@
 <?php
 include ('views/templates/head.php');
 
-include ('controllers/edit-patient.php');
+include ('controllers/view.php');
 
 include ('views/templates/footer.php');
 ?>
