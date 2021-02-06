@@ -3,7 +3,6 @@ $errors = [];
 $regStr = '/^[a-zA-Zéèàùûêâôëç \'-]+$/';
 $regDate = '/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/';
 $regPhone = '/^[0-9 ]+$/';
-$regMail = '/^[a-z0-9_.-]+@[a-z0-9]+.[a-z]{2,6}$/';
 
 
 if (isset($_GET['id'])) {
@@ -80,12 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($errors)) {
     if (empty($mail)) {
         $mail = $data->mail;
 
-    }   else {
-        if (!preg_match($regMail, $mail)) {
-            $errors['mailError'] = 'Veuillez respecter le format requis';
-
-        }
-    }
+    }   
+    
 
     if (empty($errors)) {
         // Préparation de la requete d'ajout d'un nouveau patient

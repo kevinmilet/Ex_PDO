@@ -27,7 +27,7 @@
             </div>
             <div class="col-md-3 mb-3">
                 <label class="form-label" for="phone">Téléphone</label>
-                <input class="form-control" type="text" name="phone" id="phone">
+                <input class="form-control" type="text" minlenght="10" maxlength="10" name="phone" id="phone">
                 <p class="text-danger fst-italic"><?= $errors['phoneError'] ?? '' ?></p>
             </div>
             <div class="col-md-3"></div>
