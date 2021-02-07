@@ -1,11 +1,17 @@
 <?php
 include ('views/templates/head.php');
-
-include ('controllers/add-patients.php');
-
 ?>
 
 <div>
+    <h1 class="text-center m-3">Ajout d'un nouveau patient</h1>
+</div>
+
+<?php
+include ('controllers/add-patients.php');
+?>
+
+
+<div class="text-center mt-3">
     <a href="index.php" type="button" class="btn btn-secondary mt-3">Retour à l'accueil</a>
 </div>
 
