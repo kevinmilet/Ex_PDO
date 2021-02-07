@@ -11,6 +11,9 @@ include ('views/templates/head.php');
         <li>
             <a class="nav-link" href="liste-patient.php"><i class="far fa-list-alt"></i> Liste des patients</a>
         </li>
+        <li>
+            <a class="nav-link" href="ajout-rendezvous.php"><i class="far fa-calendar-plus"></i> Nouveau rendez-vous</a>
+        </li>
 
     </ul>
     

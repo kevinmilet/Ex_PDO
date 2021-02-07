@@ -31,13 +31,13 @@ try {
 
             <?php foreach($patients as $patient): ?>
             <tr>
-                <td><a href="profil-patient.php?id=<?=$patient->id?>"><i class="far fa-edit"></i></a></td>
-                <td><?= $patient->id ?></th>
-                <td><?= $patient->lastname ?></td>
-                <td><?= $patient->firstname?></td>
-                <td><?= $patient->birthdate ?></td>
-                <td><?= $patient->phone ?></td>
-                <td><?= $patient->mail ?></td>
+                <td><a href="profil-patient.php?id=<?=htmlentities($patient->id)?>"><i class="far fa-edit"></i></a></td>
+                <td><?= htmlentities($patient->id) ?></th>
+                <td><?= htmlentities($patient->lastname) ?></td>
+                <td><?= htmlentities($patient->firstname)?></td>
+                <td><?= htmlentities($patient->birthdate) ?></td>
+                <td><?= htmlentities($patient->phone) ?></td>
+                <td><?= htmlentities($patient->mail) ?></td>
                 
             </tr>
             <?php endforeach ?>
