@@ -7,7 +7,7 @@ include ('views/templates/head.php');
 </div>
 
 <?php
-include ('controllers/list.php');
+include ('controllers/list-controller.php');
 ?>
 
 <div class="text-center">
@@ -15,7 +15,7 @@ include ('controllers/list.php');
     <a href="#" class="m-3"><i class="fas fa-sync-alt"></i> Recharger la liste</a>
     <div class="collapse" id="add-patient-form-collapse">
         <?php
-        include ('controllers/add-patients.php');
+        include ('controllers/add-patient-controller.php');
         ?>
     </div>
 </div>

@@ -11,8 +11,11 @@ if (isset($_GET['id'])) {
 
     // Afficher et éditer le patient sélectionné
     try {
-        $sql = "SELECT * FROM `patients` WHERE `id` = $id";
-        $query = $pdo->query($sql);
+        $sql = "SELECT * FROM `patients` WHERE `id` = :id";
+        $query = $pdo->prepare($sql);
+        $query->execute([
+            'id' => $_GET['id']
+        ]);
         $patient = $query->fetchAll();
 
     } catch (PDOException $e) {
@@ -84,11 +87,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($errors)) {
 
     if (empty($errors)) {
         // Préparation de la requete d'ajout d'un nouveau patient
-        $updatePatient = "UPDATE `patients` SET `lastname` = '$lastname', `firstname` = '$firstname', `birthdate` = '$birthdate', `phone` = '$phone', `mail` = '$mail' WHERE `id` = $id";
+        $updatePatient = "UPDATE `patients` SET `lastname` = :lastname, `firstname` = :firstname, `birthdate` = :birthdate, `phone` = :phone, `mail` = :mail WHERE `id` = :id";
 
         // Exécution de la requête
         try {
-            $query = $pdo->query($updatePatient);
+            $query = $pdo->prepare($updatePatient);
+            $query->execute([
+                'lastname' => $lastname,
+                'firstname' => $firstname,
+                'birthdate' => $birthdate,
+                'phone' => $phone,
+                'mail' => $mail,
+                'id' => $_GET['id']
+            ]);
             echo '<div class="alert alert-success">Patient modifié</div>';
             
 

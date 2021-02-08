@@ -18,6 +18,7 @@
                     <p>Remplissez les champs à modifier</p>
                 <?php endforeach ?>
                 <div class="m-3">
+                    <a href="index.php" type="button" class="btn btn-secondary">Retour à l'accueil</a>
                     <a href="liste-patient.php" type="button" class="btn btn-secondary">Annuler</a>
                     <button type="submit" class="btn btn-primary">Modifier</button>
                 </div>

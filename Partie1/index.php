@@ -1,7 +1,7 @@
 <?php
     $dsn = 'mysql:dbname=colyseum;host=localhost';
-    $user = 'root';
-    $password = '';
+    $user = 'colyseum';
+    $password = 'Zlwry3IY88iH31qB';
 
     try {
         $pdo = new PDO($dsn, $user, $password);
@@ -130,7 +130,7 @@
                 <a class="nav-link" id="v-pills-cardHolder-tab" data-bs-toggle="pill" href="#v-pills-cardHolder" role="tab">Ex 4 - Porteurs de carte</a>
                 <a class="nav-link" id="v-pills-clientsByM-tab" data-bs-toggle="pill" href="#v-pills-clientsByM" role="tab">Ex 5 - Nom commence par M</a>
                 <a class="nav-link" id="v-pills-events-tab" data-bs-toggle="pill" href="#v-pills-events" role="tab">Ex 6 - Evénement</a>
-                <a class="nav-link" id="v-pills-clientsFull-tab" data-bs-toggle="pill" href="#v-pills-clientsFull" role="tab">Ex 1 - Liste clients détaillée</a>
+                <a class="nav-link" id="v-pills-clientsFull-tab" data-bs-toggle="pill" href="#v-pills-clientsFull" role="tab">Ex 7 - Liste clients détaillée</a>
             </div>
         
 

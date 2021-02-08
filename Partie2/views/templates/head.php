@@ -2,8 +2,8 @@
 
 // Connexion à la BDD
 $dsn = 'mysql:dbname=hospitale2n;host=localhost';
-$user = 'root';
-$password = '';
+$user = 'comlyseum';
+$password = 'Zlwry3IY88iH31qB';
 
 try {
     $pdo = new PDO($dsn, $user, $password);

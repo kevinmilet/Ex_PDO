@@ -7,7 +7,7 @@ include ('views/templates/head.php');
 </div>
 
 <?php
-include ('controllers/add-patients.php');
+include ('controllers/add-patient-controller.php');
 ?>
 
 
