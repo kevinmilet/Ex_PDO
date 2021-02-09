@@ -1,0 +1,23 @@
+nav, .bg-light {
+    background-color: #006064!important;
+}
+
+nav a, .navbar-brand img {
+    color: #D5E5E5!important;
+}
+
+.btn-primary {
+    border-radius: 1px;
+    background-color: #428e92;
+}
+
+.btn-primary:hover {
+    border-radius: 1px;
+    background-color: #00363a;
+}
+
+#add-patient-form {
+    padding: 15px;
+    border-radius: 3px;
+    box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
+}
