@@ -3,9 +3,6 @@
 require_once(dirname(__FILE__).'/../utils/regex.php');
 require_once(dirname(__FILE__).'/../models/Patient.php');
 
-$errors = [];
-
-// Envoi du formulaire
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $lastname = trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
@@ -14,9 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $phone = trim(filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING));
     $mail = trim(filter_input(INPUT_POST, 'mail', FILTER_SANITIZE_EMAIL));
 
+
     // Champs Nom
     if (empty($lastname)) {
-        $errors['lastnameError'] = 'Ce champs est requis';
+        $lastname = htmlentities($patientSelected->lastname);
 
     }   else {
         if (!preg_match(REG_STR_NO_INT, $lastname)) {
@@ -27,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Champs Prénom
     if (empty($firstname)) {
-        $errors['firstnameError'] = 'Ce champs est requis';
+        $firstname = htmlentities($patientSelected->firstname);
 
     }   else {
         if (!preg_match(REG_STR_NO_INT, $firstname)) {
@@ -38,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Champs Date de naissance
     if (empty($birthdate)) {
-        $errors['birthdateError'] = 'Ce champs est requis';
+        $birthdate = htmlentities($patientSelected->birthdate);
 
     }   else {
         if (!preg_match(REG_BIRTH_DATE, $birthdate)) {
@@ -52,37 +50,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!preg_match(REG_PHONE, $phone)) {
             $errors['phoneError'] = 'Veuillez respecter le format requis';
 
+        } else {
+            if (empty($phone)) {
+                $phone = htmlentities($patientSelected->phone);
+            }
         }
     }   
 
     // Champs Email
     if (empty($mail)) {
-        $errors['mailError'] = 'Ce champs est requis';
+        $mail = htmlentities($patientSelected->mail);
 
-    }   else {
-        if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+    } else {
+        if (!empty($mail)) {
+            if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
                 $errors['mailError'] = 'Email non valide';
-
-        }        
+            }
+        }
     }
+    
 
     if (empty($errors)) {
-
-        $patient = new Patient($lastname, $firstname, $birthdate, $phone, $mail);
         
-        if ($patient->addPatient() == true) {
-            $feedback = '<div class="alert alert-success">Nouveau patient ajouté</div>';
+        $patient = new Patient($lastname, $firstname, $birthdate, $phone, $mail);
+
+        if ($patient->updatePatient() == true) {
+            $feedback = '<div class="alert alert-success">Informations du patient modifiées</div>';
+            $patientSelected = $patient->getPatient();
 
         }   else {
             $feedback = '<div class="alert alert-danger">Une erreur est survenue</div>';
         }
+
     }
-
+    
 }
-
-
-include(dirname(__FILE__).'/../views/templates/header.php');
-
-include(dirname(__FILE__).'/../views/ajout-patient.php');
-
-include(dirname(__FILE__).'/../views/templates/footer.php');

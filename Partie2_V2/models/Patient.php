@@ -28,7 +28,7 @@ class Patient {
 
         // préparation de la requète
         $sql = "INSERT INTO `patients` (`lastname`, `firstname`, `birthdate`, `phone`, `mail`)
-                        VALUES (:lastname, :firstname, :birthdate, :phone, :mail)";
+                        VALUES (:lastname, :firstname, :birthdate, :phone, :mail);";
 
         // execution de la requète
         try {
@@ -52,7 +52,7 @@ class Patient {
     public function listPatient() {
 
         // préparartion de la requète
-        $sql = "SELECT * FROM `patients`";
+        $sql = "SELECT * FROM `patients`;";
 
         // execution de la requète
         try {
@@ -74,9 +74,9 @@ class Patient {
 
             $id = trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
         
-            // Afficher et éditer le patient sélectionné
+            // Afficher le patient sélectionné
             try {
-                $sql = "SELECT * FROM `patients` WHERE `id` = :id";
+                $sql = "SELECT * FROM `patients` WHERE `id` = :id;";
                 $stmt = $this->_pdo->prepare($sql);
                 $stmt->bindValue(':id', $id, PDO::PARAM_STR);
                 $stmt->execute();
@@ -86,9 +86,36 @@ class Patient {
                 return false;
         
             }
-        
         } 
-        
+    }
+
+    // fonction modification patient
+    public function updatePatient() {
+
+        if (isset($_GET['id'])) {
+
+            $id = trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+
+            // Préparation de la requete d'ajout d'un nouveau patient
+            $sql = "UPDATE `patients` SET `lastname` = :lastname, `firstname` = :firstname, `birthdate` = :birthdate, `phone` = :phone, `mail` = :mail WHERE `id` = :id;";
+
+            // Exécution de la requête
+            try {
+                $stmt = $this->_pdo->prepare($sql);
+
+                $stmt->bindValue(':lastname', $this->_lastname, PDO::PARAM_STR);
+                $stmt->bindValue(':firstname', $this->_firstname, PDO::PARAM_STR);
+                $stmt->bindValue(':birthdate', $this->_birthdate, PDO::PARAM_STR);
+                $stmt->bindValue(':phone', $this->_phone, PDO::PARAM_STR);
+                $stmt->bindValue(':mail', $this->_mail, PDO::PARAM_STR);
+                $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+
+                return $stmt->execute();
+                
+            } catch (PDOException $e){
+                return false;
+            }
+        }
     }
         
 }

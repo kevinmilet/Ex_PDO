@@ -24,7 +24,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/controllers/liste-patientsCtrl.php"><span class="far fa-list-alt"></span> Liste des patients</a>
                 </li>
-                
+                <li>
+                    <a class="nav-link" href="/controllers/ajout-rendezvousCtrl.php"><i class="far fa-calendar-plus"></i> Nouveau rendez-vous</a>
+                </li>
             </ul>
             <!-- Left links -->
         </div>
