@@ -19,10 +19,10 @@
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/controllers/ajout-patientCtrl.php"><span class="fas fa-users-medical"></span> Créer un patient</a>
+                    <a class="nav-link" href="/controllers/ajout-patientCtrl.php"><span class="fas fa-users-medical"></span> Ajouter un patient</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="far fa-list-alt"></span> Liste des patients</a>
+                    <a class="nav-link" href="/controllers/liste-patientsCtrl.php"><span class="far fa-list-alt"></span> Liste des patients</a>
                 </li>
                 
             </ul>

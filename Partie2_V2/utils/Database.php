@@ -1,5 +1,5 @@
 <?php
-include(dirname(__FILE__).'/../utils/config.php');
+require_once(dirname(__FILE__).'/../utils/config.php');
 
 class Database {
 

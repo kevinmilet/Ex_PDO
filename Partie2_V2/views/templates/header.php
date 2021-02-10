@@ -12,7 +12,7 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.2.0/mdb.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/assets/css/style.css" class="css">
-    <title>Partie 2 PDO</title>
+    <title>Cabinet Medical</title>
 </head>
 
 <body>

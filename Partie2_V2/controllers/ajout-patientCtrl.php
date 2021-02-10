@@ -1,12 +1,13 @@
 <?php
 
-include(dirname(__FILE__).'/../utils/regex.php');
-include(dirname(__FILE__).'/../models/Patient.php');
+require_once(dirname(__FILE__).'/../utils/regex.php');
+require_once(dirname(__FILE__).'/../models/Patient.php');
 
 $errors = [];
+$isSuccess = false;
 
 // Envoi du formulaire
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($errors)) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $lastname = trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
     $firstname = trim(filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
@@ -66,39 +67,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($errors)) {
         }        
     }
 
-    $patient = new Patient($lastname, $firstname, $birthdate, $phone, $mail);
+    if (empty($errors)) {
 
-    $aaa = $patient->savePatient($lastname, $firstname, $birthdate, $phone, $mail);
-
-    var_dump($sth);
-
-
-//     if (empty($errors)) {
-//         // Préparation de la requete d'ajout d'un nouveau patient
-//         $addPatient = "INSERT INTO `patients` (`lastname`, `firstname`, `birthdate`, `phone`, `mail`)
-//                         VALUES ('$lastname', '$firstname', '$birthdate', '$phone', '$mail')";
-
-//         // Exécution de la requête
-//         try {
-//             $query = $pdo->query($addPatient);
-//             echo '<div class="alert alert-success">Nouveau patient ajouté</div>';
-//             include ('views/form.php');
-
-//         } catch (PDOException $e){
-//             echo '<div class="alert alert-danger">La requête  échouée: '.$e->getMessage().'</div>';
-//         }
-
-//     } else {
-//         if (!empty($errors)) {
-//             echo '<div class="alert alert-warning">Aucun patient ajouté</div>';
-//             include ('views/form.php');
-//         }
+        $patient = new Patient($lastname, $firstname, $birthdate, $phone, $mail);
         
-//     }
-        
-// } else {
+        if ($patient->addPatient() == true) {
+            $feedback = '<div class="alert alert-success">Nouveau patient ajouté</div>';
 
-//     include ('views/form.php');
+        }   else {
+            $feedback = '<div class="alert alert-danger">Une erreur est survenue</div>';
+        }
+    }
+
 }
 
 

@@ -1,10 +1,10 @@
 <?php
 
-include(dirname(__FILE__).'/../utils/Database.php');
+require_once(dirname(__FILE__).'/../utils/Database.php');
 
 class Patient {
     
-    private $_id;
+    // private $_id;
     private $_lastname;
     private $_firstname;
     private $_birthdate;
@@ -12,7 +12,8 @@ class Patient {
     private $_mail;
     private $_pdo;
 
-    public function __construct($lastname, $firstname, $birthdate, $phone, $mail) {
+    // fonction constructeur
+    public function __construct($lastname = null, $firstname = null, $birthdate = null, $phone = null, $mail = null) {
         $this->_lastname = $lastname;
         $this->_firstname = $firstname;
         $this->_birthdate = $birthdate;
@@ -22,28 +23,43 @@ class Patient {
 
     }
 
-    public function savePatient($lastname, $firstname, $birthdate, $phone, $mail) {
-        $addPatient = "INSERT INTO `patients` (`lastname`, `firstname`, `birthdate`, `phone`, `mail`)
+    // fonction ajoutant un patient
+    public function addPatient() {
+        $sql = "INSERT INTO `patients` (`lastname`, `firstname`, `birthdate`, `phone`, `mail`)
                         VALUES (:lastname, :firstname, :birthdate, :phone, :mail)";
 
         try {
-            $sth = $this->_pdo->prepare($addPatient);
-            $sth->execute([
-                'lastname' => $lastname,
-                'firstname' => $firstname,
-                'birthdate' => $birthdate,
-                'phone' => $phone,
-                'mail' => $mail
-            ]);
+            $stmt = $this->_pdo->prepare($sql);
 
-            echo '<div class="alert alert-success">Nouveau patient ajouté</div>';
+            $stmt->bindValue(':lastname', $this->_lastname, PDO::PARAM_STR);
+            $stmt->bindValue(':firstname', $this->_firstname, PDO::PARAM_STR);
+            $stmt->bindValue(':birthdate', $this->_birthdate, PDO::PARAM_STR);
+            $stmt->bindValue(':phone', $this->_phone, PDO::PARAM_STR);
+            $stmt->bindValue(':mail', $this->_mail, PDO::PARAM_STR);
 
+            return $stmt->execute();
+            
         }   catch (PDOException $e) {
 
-            echo '<div class="alert alert-danger">La requête  échouée: '.$e->getMessage().'</div>';
+            return false;
         }
-        
-        return $sth;
+
     }
 
+    // fonction listant les patients
+    public function listPatient() {
+        $sql = "SELECT * FROM `patients`";
+
+        try {
+            $stmt = $this->_pdo->query($sql);
+            $patientList = $stmt->fetchAll();
+        
+            return $patientList;
+
+        } catch (PDOException $e) {
+            return false;
+        }
+        
+    }   
+        
 }

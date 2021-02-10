@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-6 mx-auto">
         <h2 class="text-center">Ajouter un nouveau patient</h2>
-        <form action="" method="POST" id="add-patient-form">
+        <form action="" method="POST" class="view-div">
 
             <div class="row">
 
@@ -39,9 +39,14 @@
                 <div class="col-md-12 text-center">
                     <button type="submit" class="btn btn-primary">Enregistrer</button>
                 </div>
+
             </div>
         </form>
+        <div class="text-center m-3">
+            <?= $feedback ?? ''?>
+        </div>
     </div>
+
 
 
 </div>
