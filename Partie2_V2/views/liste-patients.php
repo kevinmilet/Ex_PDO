@@ -1,6 +1,6 @@
 <!-- Vue affichage liste des patients -->
 <div class="row">
-    <h2 class="text-center">Ajouter un nouveau patient</h2>
+    <h2 class="text-center">Liste des patients</h2>
     <div class="col mx-auto view-div">
         
 
@@ -18,7 +18,7 @@
 
                 <?php foreach($patientsList as $patient): ?>
                 <tr>
-                    <td><a href="profil-patient.php?id=<?=htmlentities($patient->id)?>"><i class="far fa-edit"></i></a>
+                    <td><a href="/controllers/profil-patientCtrl.php?id=<?=htmlentities($patient->id)?>"><i class="far fa-user-edit"></i></a>
                     </td>
                     <td><?= htmlentities($patient->id) ?></th>
                     <td><?= htmlentities($patient->lastname) ?></td>

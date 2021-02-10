@@ -4,7 +4,7 @@ require_once(dirname(__FILE__).'/../utils/Database.php');
 
 class Patient {
     
-    // private $_id;
+    private $_id;
     private $_lastname;
     private $_firstname;
     private $_birthdate;
@@ -25,9 +25,12 @@ class Patient {
 
     // fonction ajoutant un patient
     public function addPatient() {
+
+        // préparation de la requète
         $sql = "INSERT INTO `patients` (`lastname`, `firstname`, `birthdate`, `phone`, `mail`)
                         VALUES (:lastname, :firstname, :birthdate, :phone, :mail)";
 
+        // execution de la requète
         try {
             $stmt = $this->_pdo->prepare($sql);
 
@@ -39,8 +42,7 @@ class Patient {
 
             return $stmt->execute();
             
-        }   catch (PDOException $e) {
-
+        } catch (PDOException $e) {
             return false;
         }
 
@@ -48,8 +50,11 @@ class Patient {
 
     // fonction listant les patients
     public function listPatient() {
+
+        // préparartion de la requète
         $sql = "SELECT * FROM `patients`";
 
+        // execution de la requète
         try {
             $stmt = $this->_pdo->query($sql);
             $patientList = $stmt->fetchAll();
@@ -60,6 +65,30 @@ class Patient {
             return false;
         }
         
-    }   
+    }
+    
+    // fonction affichage d'un patient
+    public function getPatient() {
+
+        if (isset($_GET['id'])) {
+
+            $id = trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+        
+            // Afficher et éditer le patient sélectionné
+            try {
+                $sql = "SELECT * FROM `patients` WHERE `id` = :id";
+                $stmt = $this->_pdo->prepare($sql);
+                $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+                $stmt->execute();
+                return $stmt->fetch();
+
+            } catch (PDOException $e) {
+                return false;
+        
+            }
+        
+        } 
+        
+    }
         
 }
