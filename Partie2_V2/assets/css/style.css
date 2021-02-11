@@ -7,7 +7,7 @@ nav a {
 }
 
 td a i {
-    color: #212529;
+    /* color: #212529; */
     text-decoration: none;
 }
 
@@ -20,6 +20,18 @@ td a i {
 .btn-primary:hover {
     border-radius: 1px;
     background-color: #00363a;
+}
+
+.btn-primary:focus {
+    border-radius: 1px;
+    background-color: #00363a;
+}
+
+.btn-primary:active {
+    border-radius: 1px;
+    border: 1px solid #00363a;
+    color: #00363a;
+    background-color: #FFF;
 }
 
 .view-div {

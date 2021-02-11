@@ -1,3 +1,7 @@
+<?php
+require_once(dirname(__FILE__).'/../../utils/config.php');
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 

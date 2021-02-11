@@ -18,12 +18,11 @@
 
                 <?php foreach($patientsList as $patient): ?>
                 <tr>
-                    <td><a href="/controllers/profil-patientCtrl.php?id=<?=htmlentities($patient->id)?>"><i class="far fa-user-edit"></i></a>
-                    </td>
+                    <td><a type="button" class="btn btn-primary btn-sm" href="/controllers/profil-patientCtrl.php?id=<?=htmlentities($patient->id)?>"><i class="far fa-user-edit"></i></a></td>
                     <td><?= htmlentities($patient->id) ?></th>
                     <td><?= htmlentities($patient->lastname) ?></td>
                     <td><?= htmlentities($patient->firstname)?></td>
-                    <td><?= htmlentities($patient->birthdate) ?></td>
+                    <td><?= strftime('%d %B %Y', strtotime(htmlentities($patient->birthdate))) ?></td>
                     <td><?= htmlentities($patient->phone) ?></td>
                     <td><?= htmlentities($patient->mail) ?></td>
 

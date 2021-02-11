@@ -16,7 +16,7 @@
 
                 <?php foreach($aptmtList as $aptmt): ?>
                 <tr>
-                <td><a href="/controllers/rendezvousCtrl.php?aptmt_id=<?=htmlentities($aptmt->idAptmt)?>"><i class="fal fa-calendar-edit"></i></a></td>
+                <td><a type="button" class="btn btn-primary btn-sm" href="/controllers/rendezvousCtrl.php?aptmt_id=<?=htmlentities($aptmt->idAptmt)?>"><i class="fal fa-calendar-edit"></i></a></td>
                     <td><?= htmlentities($aptmt->lastname) ?></td>
                     <td><?= htmlentities($aptmt->firstname)?></td>
                     <td><?= htmlentities($aptmt->date) ?></td>
