@@ -87,22 +87,49 @@ class Appointment {
     // fonction de modification de rendez-vous
     public function updateAppointment($dateHour, $idAptmt) {
 
+        // préparation de la requete
+        $sql = "UPDATE `appointments` SET `dateHour` = :dateHour WHERE `id` = :idAptmt;";
+
+        // Execution de la requete
+        try {
+            $stmt = $this->_pdo->prepare($sql);
+
+            $stmt->bindValue(':dateHour', $dateHour, PDO::PARAM_STR);
+            $stmt->bindValue(':idAptmt', $idAptmt, PDO::PARAM_STR);
+
+            return $stmt->execute();
+        
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+
+    // afficher les rendez-vous d'un patient
+    public function getPatientAppointment() {
+
+        if (isset($_GET['id'])) {
+
+            $id = trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+
             // préparation de la requete
-            $sql = "UPDATE `appointments` SET `dateHour` = :dateHour WHERE `id` = :idAptmt;";
+            $sqllocale = "SET lc_time_names = 'fr_FR';";
+            $sql = "SELECT DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour' FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` WHERE `appointments`.`idPatients` = :id;";
 
-            // Execution de la requete
+            // execution de la requete
             try {
+                $stmt1 = $this->_pdo->exec($sqllocale);
                 $stmt = $this->_pdo->prepare($sql);
+                $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+                $stmt->execute();
+                $patientAppointment = $stmt->fetchAll();
+                return $patientAppointment;
 
-                $stmt->bindValue(':dateHour', $dateHour, PDO::PARAM_STR);
-                $stmt->bindValue(':idAptmt', $idAptmt, PDO::PARAM_STR);
-
-                return $stmt->execute();
-            
             } catch (PDOException $e) {
                 return false;
             }
-
+            
+        }
         
     }
 }

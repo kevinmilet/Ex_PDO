@@ -26,13 +26,24 @@ class Patient {
     // fonction testant si un patient existe dans la base de donnée
     public function isExist($mail) {
 
-        $sql = "SELECT * FROM `patients` WHERE `mail`= :mail;";
+        $sql = "SELECT `id` FROM `patients` WHERE `mail`= :mail;";
 
         try {
             $stmt = $this->_pdo->prepare($sql);
             $stmt->bindValue(':mail', $mail, PDO::PARAM_STR);
             
-            $isExist = $stmt->execute();
+            $stmt->execute();
+
+            $isExist = $stmt->fetch();
+
+            if(!empty($isExist)) {
+                return true;
+
+            } else {
+                return false;
+            }
+
+
 
             return $isExist;
         
@@ -52,26 +63,32 @@ class Patient {
     // fonction ajoutant un patient
     public function addPatient() {
 
-        // préparation de la requète
-        $sql = "INSERT INTO `patients` (`lastname`, `firstname`, `birthdate`, `phone`, `mail`)
-                        VALUES (:lastname, :firstname, :birthdate, :phone, :mail);";
-
-        // execution de la requète
-        try {
-            $stmt = $this->_pdo->prepare($sql);
-
-            $stmt->bindValue(':lastname', $this->_lastname, PDO::PARAM_STR);
-            $stmt->bindValue(':firstname', $this->_firstname, PDO::PARAM_STR);
-            $stmt->bindValue(':birthdate', $this->_birthdate, PDO::PARAM_STR);
-            $stmt->bindValue(':phone', $this->_phone, PDO::PARAM_STR);
-            $stmt->bindValue(':mail', $this->_mail, PDO::PARAM_STR);
-
-            return $stmt->execute();
+        if(!$this->isExist($this->_mail)) { // teste si le patient existe ou non dans la bdd
             
-        } catch (PDOException $e) {
+            // préparation de la requète
+            $sql = "INSERT INTO `patients` (`lastname`, `firstname`, `birthdate`, `phone`, `mail`)
+                            VALUES (:lastname, :firstname, :birthdate, :phone, :mail);";
+
+            // execution de la requète
+            try {
+                $stmt = $this->_pdo->prepare($sql);
+
+                $stmt->bindValue(':lastname', $this->_lastname, PDO::PARAM_STR);
+                $stmt->bindValue(':firstname', $this->_firstname, PDO::PARAM_STR);
+                $stmt->bindValue(':birthdate', $this->_birthdate, PDO::PARAM_STR);
+                $stmt->bindValue(':phone', $this->_phone, PDO::PARAM_STR);
+                $stmt->bindValue(':mail', $this->_mail, PDO::PARAM_STR);
+
+                return $stmt->execute();
+                
+            } catch (PDOException $e) {
+                return false;
+            }
+
+        } else {
             return false;
         }
-
+        
     }
 
     // fonction listant les patients
