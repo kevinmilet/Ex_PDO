@@ -23,6 +23,32 @@ class Patient {
 
     }
 
+    // fonction testant si un patient existe dans la base de donnée
+    public function isExist($mail) {
+
+        $sql = "SELECT * FROM `patients` WHERE `mail`= :mail;";
+
+        try {
+            $stmt = $this->_pdo->prepare($sql);
+            $stmt->bindValue(':mail', $mail, PDO::PARAM_STR);
+            
+            $isExist = $stmt->execute();
+
+            return $isExist;
+        
+        } catch (PDOException $e) {
+            return false;
+        }
+
+        if ($isExist) {
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
+
     // fonction ajoutant un patient
     public function addPatient() {
 

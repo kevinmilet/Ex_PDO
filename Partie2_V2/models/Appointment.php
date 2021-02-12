@@ -85,7 +85,7 @@ class Appointment {
     }
 
     // fonction de modification de rendez-vous
-    public function updateAppointment() {
+    public function updateAppointment($dateHour, $idAptmt) {
 
             // préparation de la requete
             $sql = "UPDATE `appointments` SET `dateHour` = :dateHour WHERE `id` = :idAptmt;";
@@ -95,7 +95,7 @@ class Appointment {
                 $stmt = $this->_pdo->prepare($sql);
 
                 $stmt->bindValue(':dateHour', $dateHour, PDO::PARAM_STR);
-                $stmt->bindValue('::idAptmt', $idAptmt, PDO::PARAM_STR);
+                $stmt->bindValue(':idAptmt', $idAptmt, PDO::PARAM_STR);
 
                 return $stmt->execute();
             

@@ -35,10 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['aptmt_id'])) {
     if (empty($errors)) {
         $dateHour = $date.' '.$hour.':00';
         
-        $aptmt = new Appointment($dateHour, $idAptmt);
+        $aptmt = new Appointment();
 
-        if ($aptmt->updateAppointment() == true) {
+        if ($aptmt->updateAppointment($dateHour, $idAptmt) == true) {
             $feedback = '<div class="alert alert-success">Rendez-vous modifié</div>';
+            $appointment = $aptmt->getAppointment();
 
         }   else {
             $feedback = '<div class="alert alert-danger">Une erreur est survenue</div>';

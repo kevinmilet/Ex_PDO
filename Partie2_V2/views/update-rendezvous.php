@@ -20,8 +20,6 @@
 
             </div>
         </form>
-        <div class="text-center m-3">
-            <?= $feedback ?? ''?>
-        </div>
+        
     </div>
 </div>
