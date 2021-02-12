@@ -11,6 +11,7 @@
                 <th scope="col">Prénom</th>
                 <th scope="col">Date</th>
                 <th scope="col">Heure</th>
+                <th scope="col"></th>
             </thead>
             <tbody>
 
@@ -21,6 +22,7 @@
                     <td><?= htmlentities($aptmt->firstname)?></td>
                     <td><?= htmlentities($aptmt->date) ?></td>
                     <td><?= htmlentities($aptmt->hour) ?></td>
+                    <td><a href="/controllers/liste-rendezvousCtrl.php?aptmt_id=<?=htmlentities($aptmt->idAptmt)?>&delete=1"><i class="fas fa-minus-circle text-danger"></i></a></td>
                 </tr>
                 <?php endforeach ?>
 

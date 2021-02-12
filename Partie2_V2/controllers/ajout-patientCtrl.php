@@ -66,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }        
     }
 
+    // enregistrement en bdd
     if (empty($errors)) {
 
         $patient = new Patient($lastname, $firstname, $birthdate, $phone, $mail);

@@ -43,25 +43,22 @@ class Patient {
                 return false;
             }
 
-
-
             return $isExist;
         
         } catch (PDOException $e) {
             return false;
         }
 
-        if ($isExist) {
-            return true;
-
-        } else {
-            return false;
-        }
     }
 
 
     // fonction ajoutant un patient
     public function addPatient() {
+
+        // $obj = new StdClass();
+        // $obj->result = null;
+        // $obj->error = false;
+        // $obj->msg = '';
 
         if(!$this->isExist($this->_mail)) { // teste si le patient existe ou non dans la bdd
             
@@ -78,14 +75,21 @@ class Patient {
                 $stmt->bindValue(':birthdate', $this->_birthdate, PDO::PARAM_STR);
                 $stmt->bindValue(':phone', $this->_phone, PDO::PARAM_STR);
                 $stmt->bindValue(':mail', $this->_mail, PDO::PARAM_STR);
-
+                // $obj->msg = 'insert_patient_ok';
+                // return $obj;
                 return $stmt->execute();
                 
             } catch (PDOException $e) {
+                // $obj->msg = '<div class="alert alert-danger">Erreur de requete</div>';
+                // $obj->error = true;
+                // return $obj;
                 return false;
             }
 
         } else {
+            // $obj->value = '<div class="alert alert-danger">Le patient existe déjà</div>';
+            // $obj->type = false;
+            // return $obj;//
             return false;
         }
         

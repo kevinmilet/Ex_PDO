@@ -1,3 +1,7 @@
+body {
+    background-color: #fafafa;
+}
+
 nav, .bg-light {
     background-color: #006064!important;
 }
