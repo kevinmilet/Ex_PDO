@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['aptmt_id']) && isset($_G
 
     if ($delete == '1') {
 
+        
         $aptmt = new Appointment();
         $delAptmt = $aptmt->deleteAppointment();
         $aptmtList = $aptmt->listAppointments();
