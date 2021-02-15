@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['delete'])) {
     } else {
         if ($delete == 1) {
             
-            $delPatient = $patient->deletePatient();
+            $delPatient = $patient->deletePatient($id);
             $patientsList = $patient->listPatient();
 
         }
@@ -31,6 +31,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['delete'])) {
         }
         
     }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['search'])) {
+
+    $search = trim(filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
+var_dump($search);
+    $searhPatient = $patient->searchPatient($search);
+    var_dump($searhPatient);
+
 }
 
 

@@ -158,13 +158,7 @@ class Patient {
     }
     
     // fonction supression patient
-
-public function deletePatient() {
-
-    if (isset($_GET['id']) && isset($_GET['delete'])) {
-
-        $id = trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING));
-        
+    public function deletePatient($id) {
 
         $sql = "DELETE FROM `patients` WHERE `id` = :id;";
 
@@ -177,5 +171,30 @@ public function deletePatient() {
             return false;
         }
     }
-}
+
+    // fonction recherche d'un patient
+    public function searchPatient($search) {
+
+        $sql = "SELECT * FROM `patients` WHERE `lastname` LIKE :search OR `firstname` LIKE :search;";
+
+        try {
+            $stmt = $this->_pdo->prepare($sql);
+            $stmt->bindValue(':search', '%'.$search.'%', PDO::PARAM_STR);
+            $stmt->execute();
+            $count = $stmt->rowCount();
+        
+            if ($count != 0) {
+                $result = $stmt->fetchAll();
+                return $result;
+
+            } else {
+                return false;
+            }
+        
+        } catch (PDOException $e) {
+            return false;
+        }
+
+
+    }
 }

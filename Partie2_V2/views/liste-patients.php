@@ -1,6 +1,16 @@
 <!-- Vue affichage liste des patients -->
+<h2 class="text-center">Liste des patients</h2>
+
+<form action="" class="row m-3 align-items-center" method="GET">
+    <div class="col-auto">
+        <input type="search" class="form-control" name="search" id="search">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </div>
+</form>
+
 <div class="row">
-    <h2 class="text-center">Liste des patients</h2>
     <div class="col mx-auto view-div">
         
 
