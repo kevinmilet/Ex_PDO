@@ -24,7 +24,8 @@
                     <td><?= htmlentities($aptmt->firstname)?></td>
                     <td><?= htmlentities($aptmt->date) ?></td>
                     <td><?= htmlentities($aptmt->hour) ?></td>
-                    <td><button type="button" class="btn" data-mdb-toggle="modal" data-mdb-target="#aptmt-del-confirm"><i class="fas fa-minus-circle text-danger"></i></a></td>
+                    <td><a href="/controllers/liste-rendezvousCtrl.php?aptmt_id=<?=htmlentities($aptmt->idAptmt)?>&delete=1"><i class="fas fa-minus-circle text-danger"></i></a></td>
+                    <!-- <td><button type="button" class="btn" data-mdb-toggle="modal" data-mdb-target="#aptmt-del-confirm" id="del-aptmt-btn"><i class="fas fa-minus-circle text-danger"></i></button></td> -->
                 </tr>
                 <?php endforeach ?>
 

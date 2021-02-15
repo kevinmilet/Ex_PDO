@@ -115,54 +115,67 @@ class Patient {
     }
     
     // fonction affichage d'un patient
-    public function getPatient() {
-
-        if (isset($_GET['id'])) {
-
-            $id = trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+    public function getPatient($id) {
         
-            // Afficher le patient sélectionné
-            try {
-                $sql = "SELECT * FROM `patients` WHERE `id` = :id;";
-                $stmt = $this->_pdo->prepare($sql);
-                $stmt->bindValue(':id', $id, PDO::PARAM_STR);
-                $stmt->execute();
-                return $stmt->fetch();
+        // Afficher le patient sélectionné
+        try {
+            $sql = "SELECT * FROM `patients` WHERE `id` = :id;";
+            $stmt = $this->_pdo->prepare($sql);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch();
 
-            } catch (PDOException $e) {
-                return false;
-        
-            }
-        } 
+        } catch (PDOException $e) {
+            return false;
+    
+        }
+    
     }
 
     // fonction modification patient
-    public function updatePatient() {
+    public function updatePatient($id) {
 
-        if (isset($_GET['id'])) {
+        // Préparation de la requete d'ajout d'un nouveau patient
+        $sql = "UPDATE `patients` SET `lastname` = :lastname, `firstname` = :firstname, `birthdate` = :birthdate, `phone` = :phone, `mail` = :mail WHERE `id` = :id;";
 
-            $id = trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+        // Exécution de la requête
+        try {
+            $stmt = $this->_pdo->prepare($sql);
 
-            // Préparation de la requete d'ajout d'un nouveau patient
-            $sql = "UPDATE `patients` SET `lastname` = :lastname, `firstname` = :firstname, `birthdate` = :birthdate, `phone` = :phone, `mail` = :mail WHERE `id` = :id;";
+            $stmt->bindValue(':lastname', $this->_lastname, PDO::PARAM_STR);
+            $stmt->bindValue(':firstname', $this->_firstname, PDO::PARAM_STR);
+            $stmt->bindValue(':birthdate', $this->_birthdate, PDO::PARAM_STR);
+            $stmt->bindValue(':phone', $this->_phone, PDO::PARAM_STR);
+            $stmt->bindValue(':mail', $this->_mail, PDO::PARAM_STR);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 
-            // Exécution de la requête
-            try {
-                $stmt = $this->_pdo->prepare($sql);
+            return $stmt->execute();
+            
+        } catch (PDOException $e){
+            return false;
+        }
+        
+    }
+    
+    // fonction supression patient
 
-                $stmt->bindValue(':lastname', $this->_lastname, PDO::PARAM_STR);
-                $stmt->bindValue(':firstname', $this->_firstname, PDO::PARAM_STR);
-                $stmt->bindValue(':birthdate', $this->_birthdate, PDO::PARAM_STR);
-                $stmt->bindValue(':phone', $this->_phone, PDO::PARAM_STR);
-                $stmt->bindValue(':mail', $this->_mail, PDO::PARAM_STR);
-                $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+public function deletePatient() {
 
-                return $stmt->execute();
-                
-            } catch (PDOException $e){
-                return false;
-            }
+    if (isset($_GET['id']) && isset($_GET['delete'])) {
+
+        $id = trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING));
+        
+
+        $sql = "DELETE FROM `patients` WHERE `id` = :id;";
+
+        try {
+            $stmt = $this->_pdo->prepare($sql);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            return $stmt->execute();
+
+        } catch (PDOException $e) {
+            return false;
         }
     }
-        
+}
 }

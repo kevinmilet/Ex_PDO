@@ -4,12 +4,16 @@ require_once(dirname(__FILE__).'/../models/Appointment.php');
 // nouvelle instance
 $aptmt = new Appointment();
 
-$appointment = $aptmt->getAppointment();
+if (isset($_GET['aptmt_id'])) {
+    $idAptmt = intval(trim(filter_input(INPUT_GET, 'aptmt_id', FILTER_SANITIZE_NUMBER_INT)));
+    $appointment = $aptmt->getAppointment($idAptmt);
+}
+
 
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['aptmt_id'])) {
-    $idAptmt = trim(filter_input(INPUT_GET, 'aptmt_id', FILTER_SANITIZE_STRING));
+    $idAptmt = intval(trim(filter_input(INPUT_GET, 'aptmt_id', FILTER_SANITIZE_NUMBER_INT)));
     $date = trim(filter_input(INPUT_POST, 'date', FILTER_SANITIZE_STRING));
     $hour = trim(filter_input(INPUT_POST, 'hour', FILTER_SANITIZE_STRING));
 
@@ -39,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['aptmt_id'])) {
 
         if ($aptmt->updateAppointment($dateHour, $idAptmt) == true) {
             $feedback = '<div class="alert alert-success">Rendez-vous modifié</div>';
-            $appointment = $aptmt->getAppointment();
+            $appointment = $aptmt->getAppointment($idAptmt);
 
         }   else {
             $feedback = '<div class="alert alert-danger">Une erreur est survenue</div>';

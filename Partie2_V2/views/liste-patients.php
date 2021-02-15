@@ -13,6 +13,7 @@
                 <th scope="col">Date de naissance</th>
                 <th scope="col">Téléphone</th>
                 <th scope="col">Email</th>
+                <th scope="col"></th>
             </thead>
             <tbody>
 
@@ -25,11 +26,32 @@
                     <td><?= strftime('%d %B %Y', strtotime(htmlentities($patient->birthdate))) ?></td>
                     <td><?= htmlentities($patient->phone) ?></td>
                     <td><?= htmlentities($patient->mail) ?></td>
-
+                    <td><a href="/controllers/liste-patientsCtrl.php?id=<?=htmlentities($patient->id)?>&delete=1"><i class="fas fa-minus-circle text-danger"></i></a></td>
+                    <!-- <td><button type="button" class="btn" data-mdb-toggle="modal" data-mdb-target="#patient-del-confirm"><i class="fas fa-minus-circle text-danger"></i></a></td> -->
                 </tr>
                 <?php endforeach ?>
 
             </tbody>
         </table>
+    </div>
+</div>
+
+<!-- Modale confirmation suppression patient -->
+
+<div class="modal fade" id="patient-del-confirm" tabindex="-1" aria-labelledby="patient-del-confirm-Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5 class="modal-title" id="patient-del-confirm-Label">Voulez-vous vraiment supprimer ce patientet ses rendez-vous ?</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Annuler</button>
+                <a type="button" class="btn btn-primary" href="/controllers/liste-patientsCtrl.php?id=<?=htmlentities($patient->id)?>&delete=1">Confirmer</a>
+            </div>
+        </div>
     </div>
 </div>

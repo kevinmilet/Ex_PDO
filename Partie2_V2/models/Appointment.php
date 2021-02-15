@@ -28,7 +28,7 @@ class Appointment {
             $stmt = $this->_pdo->prepare($sql);
 
             $stmt->bindValue(':dateHour', $this->_dateHour, PDO::PARAM_STR);
-            $stmt->bindValue(':idPatients', $this->_idPatients, PDO::PARAM_STR);
+            $stmt->bindValue(':idPatients', $this->_idPatients, PDO::PARAM_INT);
 
             return $stmt->execute();
 
@@ -59,27 +59,23 @@ class Appointment {
     }
 
     // fonction affichage d'un rendez-vous
-    public function getAppointment() {
+    public function getAppointment($idAptmt) {
 
-        if (isset($_GET['aptmt_id'])) {
-            $idAptmt = trim(filter_input(INPUT_GET, 'aptmt_id', FILTER_SANITIZE_STRING));
+        // préparation de la requete
+        $sqllocale = "SET lc_time_names = 'fr_FR';";
+        $sql = "SELECT *, DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour' FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` WHERE `appointments`.`id` = :aptmt_id;";
 
-            // préparation de la requete
-            $sqllocale = "SET lc_time_names = 'fr_FR';";
-            $sql = "SELECT *, DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour' FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` WHERE `appointments`.`id` = :aptmt_id;";
+        // execution de la requete
+        try {
+            $stmt1 = $this->_pdo->exec($sqllocale);
+            $stmt = $this->_pdo->prepare($sql);
+            $stmt->bindValue(':aptmt_id', $idAptmt, PDO::PARAM_INT);
+            $stmt->execute();
+            $appointment = $stmt->fetch();
+            return $appointment;
 
-            // execution de la requete
-            try {
-                $stmt1 = $this->_pdo->exec($sqllocale);
-                $stmt = $this->_pdo->prepare($sql);
-                $stmt->bindValue(':aptmt_id', $idAptmt, PDO::PARAM_STR);
-                $stmt->execute();
-                $appointment = $stmt->fetch();
-                return $appointment;
-
-            } catch (PDOException $e) {
-                return false;
-            }
+        } catch (PDOException $e) {
+            return false;
         }
         
     }
@@ -95,7 +91,7 @@ class Appointment {
             $stmt = $this->_pdo->prepare($sql);
 
             $stmt->bindValue(':dateHour', $dateHour, PDO::PARAM_STR);
-            $stmt->bindValue(':idAptmt', $idAptmt, PDO::PARAM_STR);
+            $stmt->bindValue(':idAptmt', $idAptmt, PDO::PARAM_INT);
 
             return $stmt->execute();
         
@@ -106,51 +102,41 @@ class Appointment {
 
 
     // afficher les rendez-vous d'un patient
-    public function getPatientAppointment() {
+    public function getPatientAppointment($id) {
 
-        if (isset($_GET['id'])) {
+        // préparation de la requete
+        $sqllocale = "SET lc_time_names = 'fr_FR';";
+        $sql = "SELECT DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour', `appointments`.`id` AS 'aptmtID' FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` WHERE `appointments`.`idPatients` = :id ORDER BY `dateHour`;";
 
-            $id = trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+        // execution de la requete
+        try {
+            $stmt1 = $this->_pdo->exec($sqllocale);
+            $stmt = $this->_pdo->prepare($sql);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $patientAppointment = $stmt->fetchAll();
+            return $patientAppointment;
 
-            // préparation de la requete
-            $sqllocale = "SET lc_time_names = 'fr_FR';";
-            $sql = "SELECT DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour' FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` WHERE `appointments`.`idPatients` = :id ORDER BY `dateHour`;";
-
-            // execution de la requete
-            try {
-                $stmt1 = $this->_pdo->exec($sqllocale);
-                $stmt = $this->_pdo->prepare($sql);
-                $stmt->bindValue(':id', $id, PDO::PARAM_STR);
-                $stmt->execute();
-                $patientAppointment = $stmt->fetchAll();
-                return $patientAppointment;
-
-            } catch (PDOException $e) {
-                return false;
-            }
-            
+        } catch (PDOException $e) {
+            return false;
         }
         
     }
 
     // supprimer un rendez-vous
-    public function deleteAppointment() {
+    public function deleteAppointment($idAptmt) {
 
-        if (isset($_GET['aptmt_id']) && isset($_GET['delete'])) {
+        $sql = "DELETE FROM `appointments` WHERE `id` = :idAptmt;";
 
-            $idAptmt = trim(filter_input(INPUT_GET, 'aptmt_id', FILTER_SANITIZE_STRING));
-            $delete = trim(filter_input(INPUT_GET, 'delete', FILTER_SANITIZE_STRING));
+        try {
+            $stmt = $this->_pdo->prepare($sql);
+            $stmt->bindValue(':idAptmt', $idAptmt, PDO::PARAM_INT);
+            return $stmt->execute();
 
-            $sql = "DELETE FROM `appointments` WHERE `id` = :idAptmt;";
-
-            try {
-                $stmt = $this->_pdo->prepare($sql);
-                $stmt->bindValue(':idAptmt', $idAptmt, PDO::PARAM_STR);
-                return $stmt->execute();
-
-            } catch (PDOException $e) {
-                return false;
-            }
+        } catch (PDOException $e) {
+            return false;
         }
+    
     }
+
 }

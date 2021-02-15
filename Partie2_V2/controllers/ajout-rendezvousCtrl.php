@@ -14,7 +14,7 @@ $patients = $patient->listPatient();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $idPatients = trim(filter_input(INPUT_POST, 'patient', FILTER_SANITIZE_NUMBER_INT));
+    $idPatients = intval(trim(filter_input(INPUT_POST, 'patient', FILTER_SANITIZE_NUMBER_INT)));
     $date = trim(filter_input(INPUT_POST, 'date', FILTER_SANITIZE_STRING));
     $hour = trim(filter_input(INPUT_POST, 'hour', FILTER_SANITIZE_STRING));
 

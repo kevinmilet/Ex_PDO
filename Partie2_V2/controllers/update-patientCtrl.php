@@ -3,13 +3,14 @@
 require_once(dirname(__FILE__).'/../utils/regex.php');
 require_once(dirname(__FILE__).'/../models/Patient.php');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['id'])) {
 
     $lastname = trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
     $firstname = trim(filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
     $birthdate = trim(filter_input(INPUT_POST, 'birthdate', FILTER_SANITIZE_STRING));
     $phone = trim(filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING));
     $mail = trim(filter_input(INPUT_POST, 'mail', FILTER_SANITIZE_EMAIL));
+    $id = intval(trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT)));
 
 
     // Champs Nom
@@ -74,9 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         $patient = new Patient($lastname, $firstname, $birthdate, $phone, $mail);
 
-        if ($patient->updatePatient() == true) {
+        if ($patient->updatePatient($id) == true) {
             $feedback = '<div class="alert alert-success">Informations du patient modifiées</div>';
-            $patientSelected = $patient->getPatient();
+            $patientSelected = $patient->getPatient($id);
 
         }   else {
             $feedback = '<div class="alert alert-danger">Une erreur est survenue</div>';

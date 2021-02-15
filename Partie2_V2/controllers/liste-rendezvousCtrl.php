@@ -8,14 +8,14 @@ $aptmtList = $aptmt->listAppointments();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['aptmt_id']) && isset($_GET['delete'])) {
 
-    $idAptmt = trim(filter_input(INPUT_GET, 'aptmt_id', FILTER_SANITIZE_STRING));
-    $delete = trim(filter_input(INPUT_GET, 'delete', FILTER_SANITIZE_STRING));
+    $idAptmt = intval(trim(filter_input(INPUT_GET, 'aptmt_id', FILTER_SANITIZE_NUMBER_INT)));
+    $delete = intval(trim(filter_input(INPUT_GET, 'delete', FILTER_SANITIZE_NUMBER_INT)));
 
     if ($delete == '1') {
 
         
         $aptmt = new Appointment();
-        $delAptmt = $aptmt->deleteAppointment();
+        $delAptmt = $aptmt->deleteAppointment($idAptmt);
         $aptmtList = $aptmt->listAppointments();
 
     }
