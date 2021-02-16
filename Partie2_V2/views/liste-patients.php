@@ -12,7 +12,7 @@
 
 <div class="row">
     <div class="col mx-auto view-div">
-        
+
 
         <table class="table table-hover mt-4">
             <thead>
@@ -29,14 +29,17 @@
 
                 <?php foreach($patientsList as $patient): ?>
                 <tr>
-                    <td><a type="button" class="btn btn-primary btn-sm" href="/controllers/profil-patientCtrl.php?id=<?=htmlentities($patient->id)?>"><i class="far fa-user-edit"></i></a></td>
+                    <td><a type="button" class="btn btn-primary btn-sm"
+                            href="/controllers/profil-patientCtrl.php?id=<?=htmlentities($patient->id)?>"><i
+                                class="far fa-user-edit"></i></a></td>
                     <td><?= htmlentities($patient->id) ?></th>
                     <td><?= htmlentities($patient->lastname) ?></td>
                     <td><?= htmlentities($patient->firstname)?></td>
                     <td><?= strftime('%d %B %Y', strtotime(htmlentities($patient->birthdate))) ?></td>
                     <td><?= htmlentities($patient->phone) ?></td>
                     <td><?= htmlentities($patient->mail) ?></td>
-                    <td><a href="/controllers/liste-patientsCtrl.php?id=<?=htmlentities($patient->id)?>&delete=1"><i class="fas fa-minus-circle text-danger"></i></a></td>
+                    <td><a href="/controllers/liste-patientsCtrl.php?id=<?=htmlentities($patient->id)?>&delete=1"><i
+                                class="fas fa-minus-circle text-danger"></i></a></td>
                     <!-- <td><button type="button" class="btn" data-mdb-toggle="modal" data-mdb-target="#patient-del-confirm"><i class="fas fa-minus-circle text-danger"></i></a></td> -->
                 </tr>
                 <?php endforeach ?>
@@ -44,23 +47,41 @@
             </tbody>
         </table>
     </div>
+    <nav class="pt-3">
+        <ul class="pagination pagination-circle">
+            <li class="page-item" <?= ($currentPage == 1) ? "disabled" : "" ?>>
+                <a class="page-link" href="?page=<?=$currentPage - 1 ?>" tabindex="-1">Précedent</a>
+            </li>
+            <?php for ($page = 1; $page <= $pages; $page++): ?>
+                <li class="page-item <?= ($currentPage == $page) ? "active" : "" ?>">
+                    <a href="?page=<?= $page ?>" class="page-link"><?= $page ?></a>
+                </li>
+            <?php endfor ?>
+            <li class="page-item" <?= ($currentPage == $pages) ? "disabled" : "" ?>>
+                <a class="page-link" href="?page=<?=$currentPage + 1 ?>">Suivant</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <!-- Modale confirmation suppression patient -->
 
-<div class="modal fade" id="patient-del-confirm" tabindex="-1" aria-labelledby="patient-del-confirm-Label" aria-hidden="true">
+<div class="modal fade" id="patient-del-confirm" tabindex="-1" aria-labelledby="patient-del-confirm-Label"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                
+
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h5 class="modal-title" id="patient-del-confirm-Label">Voulez-vous vraiment supprimer ce patientet ses rendez-vous ?</h5>
+                <h5 class="modal-title" id="patient-del-confirm-Label">Voulez-vous vraiment supprimer ce patientet ses
+                    rendez-vous ?</h5>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Annuler</button>
-                <a type="button" class="btn btn-primary" href="/controllers/liste-patientsCtrl.php?id=<?=htmlentities($patient->id)?>&delete=1">Confirmer</a>
+                <a type="button" class="btn btn-primary"
+                    href="/controllers/liste-patientsCtrl.php?id=<?=htmlentities($patient->id)?>&delete=1">Confirmer</a>
             </div>
         </div>
     </div>

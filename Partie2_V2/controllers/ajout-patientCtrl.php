@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $patient = new Patient($lastname, $firstname, $birthdate, $phone, $mail);
         
-        if ($patient->addPatient() == true) {
+        if ($patient->addPatient() === true) {
             $feedback = '<div class="alert alert-success">Nouveau patient ajouté</div>';
 
         }   else {

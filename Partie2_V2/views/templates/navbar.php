@@ -22,7 +22,7 @@
                     <a class="nav-link" href="/controllers/ajout-patientCtrl.php"><span class="far fa-users-medical"></span> Ajouter un patient</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/controllers/liste-patientsCtrl.php"><span class="far fa-list-alt"></span> Liste des patients</a>
+                    <a class="nav-link" href="/controllers/liste-patientsCtrl.php?page=1"><span class="far fa-list-alt"></span> Liste des patients</a>
                 </li>
                 <li>
                     <a class="nav-link" href="/controllers/ajout-rendezvousCtrl.php"><span class="far fa-calendar-plus"></span> Nouveau rendez-vous</a>

@@ -95,15 +95,32 @@ class Patient {
         
     }
 
-    // fonction listant les patients
-    public function listPatient() {
+    // fonction donnant le nombre de patients
+    public function nbPatient() {
 
-        // préparartion de la requète
-        $sql = "SELECT * FROM `patients`;";
+        $sql = "SELECT COUNT(*) AS 'nb_patients' FROM `patients`;";
 
-        // execution de la requète
         try {
             $stmt = $this->_pdo->query($sql);
+            $result = $stmt->fetch();
+            return $result;
+
+        } catch (PDOException $e) {
+            return false;
+
+        }
+    }
+
+    // fonction listant les patients
+    public function listPatient($firstpage, $limite) {
+
+        $sql = "SELECT * FROM `patients` LIMIT :firstpage, :limite;";
+        
+        try {
+            $stmt = $this->_pdo->prepare($sql);
+            $stmt->bindValue(':firstpage', $firstpage, PDO::PARAM_INT);
+            $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+            $stmt->execute();
             $patientList = $stmt->fetchAll();
         
             return $patientList;
@@ -111,7 +128,6 @@ class Patient {
         } catch (PDOException $e) {
             return false;
         }
-        
     }
     
     // fonction affichage d'un patient
@@ -194,7 +210,6 @@ class Patient {
         } catch (PDOException $e) {
             return false;
         }
-
 
     }
 }

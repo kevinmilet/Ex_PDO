@@ -7,9 +7,32 @@ require_once(dirname(__FILE__).'/../models/Appointment.php');
 $patient = new Patient();
 $aptmt = new Appointment();
 
-// On récupère la liste des patients sous forme de tableau
-$patientsList = $patient->listPatient();
+// Pagination
+if (isset($_GET['page']) && !empty($_GET['page'])) {
+    $currentPage = intval(trim(filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT)));
 
+    }else{
+        $currentPage = 1;
+        
+}
+
+// on récupére le nombre de patients et on le convertit en entier
+$result = $patient->nbPatient();
+$nbPatients = intval($result->nb_patients);
+
+// on fixe la limite de patients à afficher
+$limite = 5;
+
+// On détermine le nombre pages qu'il y aura
+$pages = ceil($nbPatients / $limite);
+
+//  on détermine la première page
+$firstpage = ($currentPage * $limite) - $limite;
+
+// on affiche la liste des patients
+$patientsList = $patient->listPatient($firstpage, $limite);
+
+// Suppression d'un patient
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['delete'])) {
 
     $id = intval(trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT)));
@@ -22,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['delete'])) {
         if ($delete == 1) {
             
             $delPatient = $patient->deletePatient($id);
-            $patientsList = $patient->listPatient();
+            $patientsList = $patient->listPatient($firstpage, $limite);
 
         }
 
@@ -33,16 +56,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['delete'])) {
     }
 }
 
+// recherche de patients
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['search'])) {
 
     $search = trim(filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
-var_dump($search);
-    $searhPatient = $patient->searchPatient($search);
-    var_dump($searhPatient);
+
+    $patientsList = $patient->searchPatient($search);
+    
 
 }
-
-
 
 
 include(dirname(__FILE__).'/../views/templates/header.php');
