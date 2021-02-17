@@ -20,12 +20,13 @@
             </div>
         </div>
 
-    <div class="text-center m-3">
+    <!-- <div class="text-center m-3">
         <?= $feedback ?? ''?>
-    </div>
+    </div> -->
 
     </div>
 
+    <!-- Fenetre collapse pour modification rdv -->
     <div class="col-md-12 text-center mt-3">
         <a href="#update-rendezvousCtrl" data-mdb-toggle="collapse" type="button" class="btn btn-primary">Modifier le
             rendez-vous</a>

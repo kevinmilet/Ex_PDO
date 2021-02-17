@@ -1,11 +1,11 @@
 <?php
-
+// includion du controlleur qui controle la modification d'un patient
 require_once(dirname(__FILE__).'/../controllers/update-patientCtrl.php');
 
 
 ?>
 
-
+<!-- Vue profil patient avec modification -->
 <div class="row">
     <h2 class="text-center mb-5">Fiche du patient</h2>
     <div class="col-md-6 mx-auto">

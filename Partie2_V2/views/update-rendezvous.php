@@ -1,3 +1,4 @@
+<!-- Vue modification d'un rendez-vous -->
 <div class="row mt-5">
     <div class="col-md-6 mx-auto">
         <form action="" method="POST" class="view-div">

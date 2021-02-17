@@ -1,5 +1,5 @@
 <?php
-
+// inclusion de la connection à la BDD
 require_once(dirname(__FILE__).'/../utils/Database.php');
 
 class Patient {

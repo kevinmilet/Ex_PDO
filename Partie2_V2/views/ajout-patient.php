@@ -7,7 +7,7 @@ if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE
 }
 ?>
 
-
+<!-- Vue ajout de patient -->
 <div class="row">
     <div class="col-md-6 mx-auto">
         <h2 class="text-center">Ajouter un nouveau patient</h2>

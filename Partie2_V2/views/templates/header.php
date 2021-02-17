@@ -1,4 +1,5 @@
 <?php
+// inclusion du fichier de config
 require_once(dirname(__FILE__).'/../../utils/config.php');
 ?>
 
@@ -22,7 +23,7 @@ require_once(dirname(__FILE__).'/../../utils/config.php');
 <body>
 
 <?php
-
+// inclusion de la navbar
 include(dirname(__FILE__).'/navbar.php');
 
 ?>
