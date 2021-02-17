@@ -1,3 +1,13 @@
+<!-- Affichage des erreurs et des messages -->
+<?php
+if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING))) {
+    if(!array_key_exists($code, $msg)){
+        $code = 0;
+    }
+    echo '<div class="alert '.$msg[$code]['type'].'">'.$msg[$code]['msg'].'</div>';
+}
+?>
+
 <!-- Vue affichage liste des patients -->
 <h2 class="text-center">Liste des patients</h2>
 
@@ -48,8 +58,16 @@
         </table>
     </div>
     <nav class="pt-3">
-        <ul class="pagination pagination-circle">
-            <li class="page-item" <?= ($currentPage == 1) ? "disabled" : "" ?>>
+        <ul class="pagination justify-content-center">
+            <li>
+                <select name="nb" id="nb" class="form-control">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+            </li>
+            <li class="page-item <?= ($currentPage == 1) ? "disabled" : "" ?>">
                 <a class="page-link" href="?page=<?=$currentPage - 1 ?>" tabindex="-1">Précedent</a>
             </li>
             <?php for ($page = 1; $page <= $pages; $page++): ?>
@@ -57,7 +75,7 @@
                     <a href="?page=<?= $page ?>" class="page-link"><?= $page ?></a>
                 </li>
             <?php endfor ?>
-            <li class="page-item" <?= ($currentPage == $pages) ? "disabled" : "" ?>>
+            <li class="page-item <?= ($currentPage == $pages) ? "disabled" : "" ?>">
                 <a class="page-link" href="?page=<?=$currentPage + 1 ?>">Suivant</a>
             </li>
         </ul>

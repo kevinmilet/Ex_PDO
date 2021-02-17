@@ -4,7 +4,6 @@ require_once(dirname(__FILE__).'/../utils/Database.php');
 
 class Patient {
     
-    private $_id;
     private $_lastname;
     private $_firstname;
     private $_birthdate;
@@ -12,7 +11,7 @@ class Patient {
     private $_mail;
     private $_pdo;
 
-    // fonction constructeur
+    // methode constructeur qui hydrate l'objet patient
     public function __construct($lastname = null, $firstname = null, $birthdate = null, $phone = null, $mail = null) {
         $this->_lastname = $lastname;
         $this->_firstname = $firstname;
@@ -23,7 +22,7 @@ class Patient {
 
     }
 
-    // fonction testant si un patient existe dans la base de donnée
+    // methode testant si un patient existe dans la base de donnée
     public function isExist($mail) {
 
         $sql = "SELECT `id` FROM `patients` WHERE `mail`= :mail;";
@@ -35,14 +34,7 @@ class Patient {
             $stmt->execute();
 
             $isExist = $stmt->fetch();
-
-            if(!empty($isExist)) {
-                return true;
-
-            } else {
-                return false;
-            }
-
+            
             return $isExist;
         
         } catch (PDOException $e) {
@@ -52,13 +44,8 @@ class Patient {
     }
 
 
-    // fonction ajoutant un patient
+    // methode ajoutant un patient
     public function addPatient() {
-
-        // $obj = new StdClass();
-        // $obj->result = null;
-        // $obj->error = false;
-        // $obj->msg = '';
 
         if(!$this->isExist($this->_mail)) { // teste si le patient existe ou non dans la bdd
             
@@ -75,33 +62,27 @@ class Patient {
                 $stmt->bindValue(':birthdate', $this->_birthdate, PDO::PARAM_STR);
                 $stmt->bindValue(':phone', $this->_phone, PDO::PARAM_STR);
                 $stmt->bindValue(':mail', $this->_mail, PDO::PARAM_STR);
-                // $obj->msg = 'insert_patient_ok';
-                // return $obj;
                 return $stmt->execute();
                 
             } catch (PDOException $e) {
-                // $obj->msg = '<div class="alert alert-danger">Erreur de requete</div>';
-                // $obj->error = true;
-                // return $obj;
                 return false;
             }
 
         } else {
-            // $obj->value = '<div class="alert alert-danger">Le patient existe déjà</div>';
-            // $obj->type = false;
-            // return $obj;//
-            return false;
+            return 23000;
         }
         
     }
 
-    // fonction donnant le nombre de patients
-    public function nbPatient() {
+    // methode donnant le nombre de patients
+    public static function nbPatient() {
+
+        $pdo = Database::dbconnect();
 
         $sql = "SELECT COUNT(*) AS 'nb_patients' FROM `patients`;";
 
         try {
-            $stmt = $this->_pdo->query($sql);
+            $stmt = $pdo->query($sql);
             $result = $stmt->fetch();
             return $result;
 
@@ -111,13 +92,15 @@ class Patient {
         }
     }
 
-    // fonction listant les patients
-    public function listPatient($firstpage, $limite) {
+    // methode listant les patients
+    public static function listPatient($firstpage, $limite) {
+
+        $pdo = Database::dbconnect();
 
         $sql = "SELECT * FROM `patients` LIMIT :firstpage, :limite;";
         
         try {
-            $stmt = $this->_pdo->prepare($sql);
+            $stmt =$pdo->prepare($sql);
             $stmt->bindValue(':firstpage', $firstpage, PDO::PARAM_INT);
             $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
             $stmt->execute();
@@ -130,13 +113,14 @@ class Patient {
         }
     }
     
-    // fonction affichage d'un patient
-    public function getPatient($id) {
+    // methode affichage d'un patient
+    public static function getPatient($id) {
         
-        // Afficher le patient sélectionné
+        $pdo = Database::dbconnect();
+
         try {
             $sql = "SELECT * FROM `patients` WHERE `id` = :id;";
-            $stmt = $this->_pdo->prepare($sql);
+            $stmt = $pdo->prepare($sql);
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetch();
@@ -148,7 +132,7 @@ class Patient {
     
     }
 
-    // fonction modification patient
+    // methode modification patient
     public function updatePatient($id) {
 
         // Préparation de la requete d'ajout d'un nouveau patient
@@ -173,13 +157,15 @@ class Patient {
         
     }
     
-    // fonction supression patient
-    public function deletePatient($id) {
+    // methode supression patient
+    public static function deletePatient($id) {
+
+        $pdo = Database::dbconnect();
 
         $sql = "DELETE FROM `patients` WHERE `id` = :id;";
 
         try {
-            $stmt = $this->_pdo->prepare($sql);
+            $stmt = $pdo->prepare($sql);
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             return $stmt->execute();
 
@@ -188,13 +174,15 @@ class Patient {
         }
     }
 
-    // fonction recherche d'un patient
-    public function searchPatient($search) {
+    // methode recherche d'un patient
+    public static function searchPatient($search) {
+
+        $pdo = Database::dbconnect();
 
         $sql = "SELECT * FROM `patients` WHERE `lastname` LIKE :search OR `firstname` LIKE :search;";
 
         try {
-            $stmt = $this->_pdo->prepare($sql);
+            $stmt = $pdo->prepare($sql);
             $stmt->bindValue(':search', '%'.$search.'%', PDO::PARAM_STR);
             $stmt->execute();
             $count = $stmt->rowCount();

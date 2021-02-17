@@ -1,13 +1,12 @@
 <?php
 require_once(dirname(__FILE__).'/../models/Patient.php');
-require_once(dirname(__FILE__).'/../models/Appointment.php');
 
 
-// nouvelle instance de Patient()
-$patient = new Patient();
-$aptmt = new Appointment();
-
-// Pagination
+//*****************************************************************************************************
+//
+// Affichage de la liste des patients avec pagination
+//
+//*****************************************************************************************************
 if (isset($_GET['page']) && !empty($_GET['page'])) {
     $currentPage = intval(trim(filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT)));
 
@@ -17,7 +16,7 @@ if (isset($_GET['page']) && !empty($_GET['page'])) {
 }
 
 // on récupére le nombre de patients et on le convertit en entier
-$result = $patient->nbPatient();
+$result = Patient::nbPatient();
 $nbPatients = intval($result->nb_patients);
 
 // on fixe la limite de patients à afficher
@@ -30,43 +29,55 @@ $pages = ceil($nbPatients / $limite);
 $firstpage = ($currentPage * $limite) - $limite;
 
 // on affiche la liste des patients
-$patientsList = $patient->listPatient($firstpage, $limite);
+$patientsList = Patient::listPatient($firstpage, $limite);
+//*****************************************************************************************************
 
+
+//*****************************************************************************************************
+//
 // Suppression d'un patient
+//
+//*****************************************************************************************************
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['delete'])) {
 
     $id = intval(trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT)));
     $delete = intval(trim(filter_input(INPUT_GET, 'delete', FILTER_SANITIZE_NUMBER_INT)));
 
     if ($id <= 0 && $delete != 1) {
-        header('location: /index.php');
+        header('location: /controllers/liste-patientsCtrl.php?code=8');
 
     } else {
         if ($delete == 1) {
             
-            $delPatient = $patient->deletePatient($id);
-            $patientsList = $patient->listPatient($firstpage, $limite);
+            $delPatient = Patient::deletePatient($id);
+            $patientsList = Patient::listPatient($firstpage, $limite);
 
         }
 
         if (!$patientsList) {
-            header('location: /index.php');
+            header('location: /controllers/liste-patientsCtrl.php?code=0');
         }
-        
+    
     }
 }
+//*****************************************************************************************************
 
+
+//*****************************************************************************************************
+//
 // recherche de patients
+//
+//*****************************************************************************************************
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['search'])) {
 
     $search = trim(filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
 
-    $patientsList = $patient->searchPatient($search);
-    
-
+    $patientsList = Patient::searchPatient($search);
 }
+//*****************************************************************************************************
 
 
+// Affichage des vues
 include(dirname(__FILE__).'/../views/templates/header.php');
 
 include(dirname(__FILE__).'/../views/liste-patients.php');

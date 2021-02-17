@@ -1,3 +1,13 @@
+<!-- Affichage des erreurs et des messages -->
+<?php
+if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING))) {
+    if(!array_key_exists($code, $msg)){
+        $code = 0;
+    }
+    echo '<div class="alert '.$msg[$code]['type'].'">'.$msg[$code]['msg'].'</div>';
+}
+?>
+
 <!-- Vue affichage liste des rendez-vous -->
 <div class="row">
     <h2 class="text-center">Liste des rendez-vous</h2>

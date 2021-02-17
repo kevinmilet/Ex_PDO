@@ -4,19 +4,18 @@ require_once(dirname(__FILE__).'/../utils/Database.php');
 
 class Appointment {
 
-    private $_id;
     private $_dateHour;
     private $_idPatients;
     private $_pdo;
 
-    // fonction constructeur
+    // methode constructeur
     public function __construct($dateHour = null, $idPatients = null) {
         $this->_dateHour = $dateHour;
         $this->_idPatients = $idPatients;
         $this->_pdo = Database::dbconnect();
     }
 
-    // fonction ajout rendez-vous
+    // methode ajout rendez-vous
     public function addAppointment() {
 
         // préparation de la requète
@@ -37,8 +36,10 @@ class Appointment {
         }
     }
 
-    // fonction liste des rendez-vous
-    public function listAppointments() {
+    // methode liste des rendez-vous
+    public static function listAppointments() {
+
+        $pdo = Database::dbconnect();
 
         // préparation de la requète
         $sqllocale = "SET lc_time_names = 'fr_FR';";
@@ -46,8 +47,8 @@ class Appointment {
 
         // execution de la requete
         try {
-            $stmt1 = $this->_pdo->exec($sqllocale);
-            $stmt = $this->_pdo->query($sql);
+            $stmt1 = $pdo->exec($sqllocale);
+            $stmt = $pdo->query($sql);
             
             $aptmtList = $stmt->fetchAll();
             
@@ -58,8 +59,10 @@ class Appointment {
         }
     }
 
-    // fonction affichage d'un rendez-vous
-    public function getAppointment($idAptmt) {
+    // methode affichage d'un rendez-vous
+    public static function getAppointment($idAptmt) {
+
+        $pdo = Database::dbconnect();
 
         // préparation de la requete
         $sqllocale = "SET lc_time_names = 'fr_FR';";
@@ -67,8 +70,8 @@ class Appointment {
 
         // execution de la requete
         try {
-            $stmt1 = $this->_pdo->exec($sqllocale);
-            $stmt = $this->_pdo->prepare($sql);
+            $stmt1 = $pdo->exec($sqllocale);
+            $stmt = $pdo->prepare($sql);
             $stmt->bindValue(':aptmt_id', $idAptmt, PDO::PARAM_INT);
             $stmt->execute();
             $appointment = $stmt->fetch();
@@ -80,7 +83,7 @@ class Appointment {
         
     }
 
-    // fonction de modification de rendez-vous
+    // methode de modification de rendez-vous
     public function updateAppointment($dateHour, $idAptmt) {
 
         // préparation de la requete
@@ -102,7 +105,9 @@ class Appointment {
 
 
     // afficher les rendez-vous d'un patient
-    public function getPatientAppointment($id) {
+    public static function getPatientAppointment($id) {
+
+        $pdo = Database::dbconnect();
 
         // préparation de la requete
         $sqllocale = "SET lc_time_names = 'fr_FR';";
@@ -110,8 +115,8 @@ class Appointment {
 
         // execution de la requete
         try {
-            $stmt1 = $this->_pdo->exec($sqllocale);
-            $stmt = $this->_pdo->prepare($sql);
+            $stmt1 = $pdo->exec($sqllocale);
+            $stmt = $pdo->prepare($sql);
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
             $patientAppointment = $stmt->fetchAll();
@@ -124,12 +129,14 @@ class Appointment {
     }
 
     // supprimer un rendez-vous
-    public function deleteAppointment($idAptmt) {
+    public static function deleteAppointment($idAptmt) {
+
+        $pdo = Database::dbconnect();
 
         $sql = "DELETE FROM `appointments` WHERE `id` = :idAptmt;";
 
         try {
-            $stmt = $this->_pdo->prepare($sql);
+            $stmt = $pdo->prepare($sql);
             $stmt->bindValue(':idAptmt', $idAptmt, PDO::PARAM_INT);
             return $stmt->execute();
 

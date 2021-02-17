@@ -6,11 +6,13 @@ require_once(dirname(__FILE__).'/../models/Appointment.php');
 
 $errors = [];
 
-// nouvelle instance de Patient()
-$patient = new Patient();
+// On récupère la liste des patients pour les insérer dans le select
+$firstpage = 0;
 
-// On récupère la liste des patients sous forme de tableau
-$patients = $patient->listPatient();
+$limite = Patient::nbPatient();
+$limite = intval($limite->nb_patients);
+
+$patients = Patient::listPatient($firstpage, $limite);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -51,12 +53,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $dateHour = $date.' '.$hour.':00';
         
         $aptmt = new Appointment($dateHour, $idPatients);
+        $result = $aptmt->addAppointment();
 
-        if ($aptmt->addAppointment() == true) {
-            $feedback = '<div class="alert alert-success">Nouveau rendez-vous ajouté le '.$date.' à '.$hour.'</div>';
+        if ($result === true) {
+            // $feedback = '<div class="alert alert-success">Nouveau rendez-vous ajouté le '.$date.' à '.$hour.'</div>';
+            header('location: /controllers/ajout-rendezvousCtrl.php?code=10');
 
         }   else {
-            $feedback = '<div class="alert alert-danger">Une erreur est survenue</div>';
+            // $feedback = '<div class="alert alert-danger">Une erreur est survenue</div>';
+            header('location: /controllers/ajout-rendezvousCtrl.php?code=9');
         }
     }
 

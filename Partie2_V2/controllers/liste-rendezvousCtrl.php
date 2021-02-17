@@ -1,11 +1,10 @@
 <?php
 require_once(dirname(__FILE__).'/../models/Appointment.php');
 
-// nouvelle instance
-$aptmt = new Appointment();
+// Affichache de la liste des rendez-vous
+$aptmtList = Appointment::listAppointments();
 
-$aptmtList = $aptmt->listAppointments();
-
+// Gestion suppression rendez-vous
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['aptmt_id']) && isset($_GET['delete'])) {
 
     $idAptmt = intval(trim(filter_input(INPUT_GET, 'aptmt_id', FILTER_SANITIZE_NUMBER_INT)));
@@ -13,14 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['aptmt_id']) && isset($_G
 
     if ($delete == '1') {
 
-        
-        $aptmt = new Appointment();
-        $delAptmt = $aptmt->deleteAppointment($idAptmt);
-        $aptmtList = $aptmt->listAppointments();
+        $delAptmt = Appointment::deleteAppointment($idAptmt);
+        $aptmtList = Appointment::listAppointments();
 
     }
 }
 
+// Affichage des vues
 include(dirname(__FILE__).'/../views/templates/header.php');
 
 include(dirname(__FILE__).'/../views/liste-rendezvous.php');

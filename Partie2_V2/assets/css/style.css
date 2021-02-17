@@ -44,3 +44,11 @@ td a i {
     box-shadow: 0 10px 20px 0 rgb(0 0 0 / 5%);
 }
 
+.page-item.disabled .page-link {
+    background-color: transparent;
+    color: rgba(250,250,250, .5);
+}
+
+.page-link:hover {
+    background-color: rgba(250,250,250, .5);
+}

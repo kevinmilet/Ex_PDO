@@ -1,6 +1,10 @@
 <?php
+
 require_once(dirname(__FILE__).'/../controllers/update-patientCtrl.php');
+
+
 ?>
+
 
 <div class="row">
     <h2 class="text-center mb-5">Fiche du patient</h2>

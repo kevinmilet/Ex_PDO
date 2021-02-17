@@ -3,11 +3,13 @@
 require_once(dirname(__FILE__).'/../utils/regex.php');
 require_once(dirname(__FILE__).'/../models/Patient.php');
 
+// initialisation du tableau des erreurs
 $errors = [];
 
 // Envoi du formulaire
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+    // on vérifie l'existence des données et on nettoye
     $lastname = trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
     $firstname = trim(filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
     $birthdate = trim(filter_input(INPUT_POST, 'birthdate', FILTER_SANITIZE_STRING));
@@ -70,18 +72,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($errors)) {
 
         $patient = new Patient($lastname, $firstname, $birthdate, $phone, $mail);
-        
-        if ($patient->addPatient() === true) {
-            $feedback = '<div class="alert alert-success">Nouveau patient ajouté</div>';
+        $result = $patient->addPatient();
+
+        if ($result === true) {
+            // $feedback = '<div class="alert alert-success">Nouveau patient ajouté</div>';
+            header('location: /controllers/liste-patientsCtrl.php?code=1');
 
         }   else {
-            $feedback = '<div class="alert alert-danger">Une erreur est survenue</div>';
+            // $feedback = '<div class="alert alert-danger">Une erreur est survenue</div>';
+            // header('location: /controllers/liste-patientsCtrl.php?code=0');
+            $code = $result;
         }
     }
 
 }
 
-
+// Affichage des vues
 include(dirname(__FILE__).'/../views/templates/header.php');
 
 include(dirname(__FILE__).'/../views/ajout-patient.php');
