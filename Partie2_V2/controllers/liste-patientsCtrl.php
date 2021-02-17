@@ -1,6 +1,19 @@
 <?php
 require_once(dirname(__FILE__).'/../models/Patient.php');
 
+//*****************************************************************************************************
+//
+// Gestion du nombre de patients à afficher grace au select
+//
+//*****************************************************************************************************
+
+if (isset($_GET['limit']) && !empty($_GET['limit'])) {
+    $limitSelected = intval(trim(filter_input(INPUT_GET, 'limit', FILTER_SANITIZE_NUMBER_INT)));
+
+} else {
+    $limitSelected = 5;
+
+}
 
 //*****************************************************************************************************
 //
@@ -20,7 +33,7 @@ $result = Patient::nbPatient();
 $nbPatients = intval($result->nb_patients);
 
 // on fixe la limite de patients à afficher
-$limite = 5;
+$limite = $limitSelected;
 
 // On détermine le nombre pages qu'il y aura
 $pages = ceil($nbPatients / $limite);

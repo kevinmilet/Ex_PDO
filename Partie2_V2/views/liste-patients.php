@@ -60,23 +60,31 @@ if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE
     <nav class="pt-3">
         <ul class="pagination justify-content-center">
             <li>
-                <select name="nb" id="nb" class="form-control">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                </select>
+                <form action="" methode="GET" class="row">
+                    <div class="col-auto">
+                        <select name="limit" id="limit" class="form-control">
+                            <option value="5" <?= $limitSelected == 5 ? 'selected' : '';?>>5</option>
+                            <option value="10" <?= $limitSelected == 10 ? 'selected' : '';?>>10</option>
+                            <option value="15" <?= $limitSelected == 15 ? 'selected' : '';?>>15</option>
+                            <option value="20" <?= $limitSelected == 20 ? 'selected' : '';?>>20</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">Changer</button>
+                    </div>
+                </form>
+                
             </li>
             <li class="page-item <?= ($currentPage == 1) ? "disabled" : "" ?>">
-                <a class="page-link" href="?page=<?=$currentPage - 1 ?>" tabindex="-1">Précedent</a>
+                <a class="page-link" href="?page=<?=$currentPage - 1 ?>&limit=<?= $limitSelected ?>" tabindex="-1">Précedent</a>
             </li>
             <?php for ($page = 1; $page <= $pages; $page++): ?>
                 <li class="page-item <?= ($currentPage == $page) ? "active" : "" ?>">
-                    <a href="?page=<?= $page ?>" class="page-link"><?= $page ?></a>
+                    <a href="?page=<?= $page ?>&limit=<?= $limitSelected ?>" class="page-link"><?= $page ?></a>
                 </li>
             <?php endfor ?>
             <li class="page-item <?= ($currentPage == $pages) ? "disabled" : "" ?>">
-                <a class="page-link" href="?page=<?=$currentPage + 1 ?>">Suivant</a>
+                <a class="page-link" href="?page=<?=$currentPage + 1 ?>&limit=<?= $limitSelected ?>">Suivant</a>
             </li>
         </ul>
     </nav>
