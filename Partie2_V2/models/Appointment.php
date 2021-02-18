@@ -36,20 +36,40 @@ class Appointment {
         }
     }
 
+    // méthode donnant le nombre de rdv
+    public static function nbAppointment() {
+
+        $pdo = Database::dbconnect();
+
+        $sql = "SELECT COUNT(*) AS 'nb_aptmt' FROM `appointments`;";
+
+        try {
+            $stmt = $pdo->query($sql);
+            $result = $stmt->fetch();
+            return $result;
+
+        } catch (PDOException $e) {
+            return false;
+
+        }
+    }
+
     // methode liste des rendez-vous
-    public static function listAppointments() {
+    public static function listAppointments($firstpageAptmt, $limiteAptmt) {
 
         $pdo = Database::dbconnect();
 
         // préparation de la requète
         $sqllocale = "SET lc_time_names = 'fr_FR';";
-        $sql = "SELECT `appointments`.`id` AS 'idAptmt', `patients`.`id` AS 'IdPatient', `patients`.`lastname` AS 'lastname', `patients`.`firstname` AS 'firstname', DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour' FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id`;";
+        $sql = "SELECT `appointments`.`id` AS 'idAptmt', `patients`.`id` AS 'IdPatient', `patients`.`lastname` AS 'lastname', `patients`.`firstname` AS 'firstname', DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour' FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` LIMIT :firstpage, :limite;";
 
         // execution de la requete
         try {
             $stmt1 = $pdo->exec($sqllocale);
-            $stmt = $pdo->query($sql);
-            
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindValue(':firstpage', $firstpageAptmt, PDO::PARAM_INT);
+            $stmt->bindValue(':limite', $limiteAptmt, PDO::PARAM_INT);
+            $stmt->execute();
             $aptmtList = $stmt->fetchAll();
             
             return $aptmtList;

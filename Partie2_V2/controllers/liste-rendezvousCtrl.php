@@ -1,8 +1,39 @@
 <?php
 require_once(dirname(__FILE__).'/../models/Appointment.php');
 
-// Affichache de la liste des rendez-vous
-$aptmtList = Appointment::listAppointments();
+// Affichage de la liste des rendez-vous
+
+if (isset($_GET['limitAptmt']) && !empty($_GET['limitAptmt'])) {
+    $limitSelectedAptmt = intval(trim(filter_input(INPUT_GET, 'limitAptmt', FILTER_SANITIZE_NUMBER_INT)));
+
+} else {
+    $limitSelectedAptmt = 5;
+
+}
+
+if (isset($_GET['pageAptmt']) && !empty($_GET['pageAptmt'])) {
+    $currentPageAptmt = intval(trim(filter_input(INPUT_GET, 'pageAptmt', FILTER_SANITIZE_NUMBER_INT)));
+
+    }else{
+        $currentPageAptmt = 1;
+        
+}
+
+// on récupére le nombre de rdv et on le convertit en entier
+$resultAptmt = Appointment::nbAppointment();
+$nbAptmt = intval($resultAptmt->nb_aptmt);
+
+// on fixe la limite de patients à afficher
+$limiteAptmt = $limitSelectedAptmt;
+
+// On détermine le nombre pages qu'il y aura
+$pagesAptmt = ceil($nbAptmt / $limiteAptmt);
+
+//  on détermine la première page
+$firstpageAptmt = ($currentPageAptmt * $limiteAptmt) - $limiteAptmt;
+
+// on affiche la liste des patients
+$aptmtList = Appointment::listAppointments($firstpageAptmt, $limiteAptmt);
 
 // Gestion suppression rendez-vous
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['aptmt_id']) && isset($_GET['delete'])) {
@@ -13,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['aptmt_id']) && isset($_G
     if ($delete == '1') {
 
         $delAptmt = Appointment::deleteAppointment($idAptmt);
-        $aptmtList = Appointment::listAppointments();
+        $aptmtList = Appointment::listAppointments($firstpageAptmt, $limiteAptmt);
 
     }
 }

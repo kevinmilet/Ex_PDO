@@ -5,7 +5,7 @@
 
         <div class="card mt-5">
             <div class="card-header">
-                <h5 class="card-title">Le <?= $appointment->date?></h5>
+                <h5 class="card-title">Le <?= ucwords($appointment->date)?></h5>
                 <div class="card-text">
                     <h6>à <?= $appointment->hour?> heure</h6>
                 </div>
@@ -14,7 +14,7 @@
                 <h6>Détails du patient:</h6>
                 <p>Nom: <?= $appointment->lastname?></p>
                 <p>Prénom: <?= $appointment->firstname?></p>
-                <p>Date de naissance: <?=strftime('%d %B %Y', strtotime($appointment->birthdate))?></p>
+                <p>Date de naissance: <?=ucwords(strftime('%d %B %Y', strtotime($appointment->birthdate)))?></p>
                 <p>Téléphone: <?= $appointment->phone?></p>
                 <p>Email: <?= $appointment->mail?></p>
             </div>

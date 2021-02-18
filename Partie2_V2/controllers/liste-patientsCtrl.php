@@ -1,6 +1,8 @@
 <?php
 require_once(dirname(__FILE__).'/../models/Patient.php');
 
+$pageType = 1;
+
 //*****************************************************************************************************
 //
 // Gestion du nombre de patients à afficher grace au select
@@ -96,6 +98,3 @@ include(dirname(__FILE__).'/../views/templates/header.php');
 include(dirname(__FILE__).'/../views/liste-patients.php');
 
 include(dirname(__FILE__).'/../views/templates/footer.php');
-
-
-//document.location.href

@@ -45,7 +45,7 @@ if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE
                     <td><?= htmlentities($patient->id) ?></th>
                     <td><?= htmlentities($patient->lastname) ?></td>
                     <td><?= htmlentities($patient->firstname)?></td>
-                    <td><?= strftime('%d %B %Y', strtotime(htmlentities($patient->birthdate))) ?></td>
+                    <td><?= ucwords(strftime('%d %B %Y', strtotime(htmlentities($patient->birthdate)))) ?></td>
                     <td><?= htmlentities($patient->phone) ?></td>
                     <td><?= htmlentities($patient->mail) ?></td>
                     <td><a href="/controllers/liste-patientsCtrl.php?id=<?=htmlentities($patient->id)?>&delete=1"><i
