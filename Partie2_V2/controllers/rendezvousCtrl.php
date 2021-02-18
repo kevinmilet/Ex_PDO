@@ -1,4 +1,5 @@
 <?php
+require_once(dirname(__FILE__).'/../utils/regex.php');
 require_once(dirname(__FILE__).'/../models/Appointment.php');
 
 
@@ -22,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['aptmt_id'])) {
         $errors['dateError'] = 'Ce champs est requis';
 
     }   else {
-        if (!preg_match('/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/', $date)) {
+        if (!preg_match(REG_DATE, $date)) {
             $errors['dateError'] = 'Date invalide';
 
         }
@@ -32,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['aptmt_id'])) {
         $errors['hourError'] = 'Ce champs est requis';
 
     }   else {
-        if (!preg_match('/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/', $hour))
+        if (!preg_match(REG_HOUR, $hour))
         $errors['hourError'] = 'Heure invalide';
         
     }

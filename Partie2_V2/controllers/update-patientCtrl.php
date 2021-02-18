@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['id'])) {
         $birthdate = htmlentities($patientSelected->birthdate);
 
     }   else {
-        if (!preg_match(REG_BIRTH_DATE, $birthdate)) {
+        if (!preg_match(REG_DATE, $birthdate)) {
             $errors['birthdateError'] = 'Veuillez respecter le format requis';
 
         }

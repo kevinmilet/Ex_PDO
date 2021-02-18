@@ -1,5 +1,5 @@
 <?php
-
+require_once(dirname(__FILE__).'/../utils/regex.php');
 require_once(dirname(__FILE__).'/../models/Patient.php');
 require_once(dirname(__FILE__).'/../models/Appointment.php');
 
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     }   else {
 
-        if (!preg_match('/^[0-9]+$/', $idPatients)) {
+        if (!preg_match(REG_ID, $idPatients)) {
             $errors['idPatientsError'] = 'ID patient invalide';
         }
     }
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors['dateError'] = 'Ce champs est requis';
 
     }   else {
-        if (!preg_match('/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/', $date)) {
+        if (!preg_match(REG_DATE, $date)) {
             $errors['dateError'] = 'Date invalide';
 
         }
@@ -44,13 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors['hourError'] = 'Ce champs est requis';
 
     }   else {
-        if (!preg_match('/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/', $hour))
+        if (!preg_match(REG_HOUR, $hour))
         $errors['hourError'] = 'Heure invalide';
         
     }
 
     if (empty($errors)) {
-        $dateHour = $date.' '.$hour.':00';
+        $dateHour = $date.' '.$hour.':00'; // YYYY-MM-DD HH:MM:SS
         
         $aptmt = new Appointment($dateHour, $idPatients);
         $result = $aptmt->addAppointment();
