@@ -1,40 +1,34 @@
 <?php
-$pageTitle = "Cabinet médical - Liest des rendes-vous";
+$pageTitle = "Cabinet médical - Liste des rendes-vous";
+
+require_once(dirname(__FILE__).'/../utils/config.php');
 require_once(dirname(__FILE__).'/../models/Appointment.php');
 
 // Affichage de la liste des rendez-vous
 
-if (isset($_GET['limitAptmt']) && !empty($_GET['limitAptmt'])) {
-    $limitSelectedAptmt = intval(trim(filter_input(INPUT_GET, 'limitAptmt', FILTER_SANITIZE_NUMBER_INT)));
-
-} else {
-    $limitSelectedAptmt = 5;
-
-}
-
-if (isset($_GET['pageAptmt']) && !empty($_GET['pageAptmt'])) {
-    $currentPageAptmt = intval(trim(filter_input(INPUT_GET, 'pageAptmt', FILTER_SANITIZE_NUMBER_INT)));
+if (isset($_GET['page']) && !empty($_GET['page'])) {
+    $currentPage = intval(trim(filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT)));
 
     }else{
-        $currentPageAptmt = 1;
+        $currentPage = 1;
         
 }
 
 // on récupére le nombre de rdv et on le convertit en entier
-$resultAptmt = Appointment::nbAppointment();
-$nbAptmt = intval($resultAptmt->nb_aptmt);
+$result = Appointment::nbAppointment();
+$nbAptmt = intval($result->nb_aptmt);
 
 // on fixe la limite de patients à afficher
-$limiteAptmt = $limitSelectedAptmt;
+$limite = $_SESSION['limit'];
 
 // On détermine le nombre pages qu'il y aura
-$pagesAptmt = ceil($nbAptmt / $limiteAptmt);
+$pages = ceil($nbAptmt / $limite);
 
 //  on détermine la première page
-$firstpageAptmt = ($currentPageAptmt * $limiteAptmt) - $limiteAptmt;
+$firstpage = ($currentPage * $limite) - $limite;
 
 // on affiche la liste des patients
-$aptmtList = Appointment::listAppointments($firstpageAptmt, $limiteAptmt);
+$aptmtList = Appointment::listAppointments($firstpage, $limite);
 
 // Gestion suppression rendez-vous
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['aptmt_id']) && isset($_GET['delete'])) {
@@ -45,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['aptmt_id']) && isset($_G
     if ($delete == '1') {
 
         $delAptmt = Appointment::deleteAppointment($idAptmt);
-        $aptmtList = Appointment::listAppointments($firstpageAptmt, $limiteAptmt);
+        $aptmtList = Appointment::listAppointments($firstpage, $limite);
 
     }
 }

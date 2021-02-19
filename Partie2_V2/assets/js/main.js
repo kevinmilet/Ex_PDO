@@ -1,31 +1,11 @@
-// Gestion du select pour choisir le nombre de patients à afficher
+// Gestion du select pour choisir le nombre de patients ou rdv à afficher
 
-let selectPatient = document.querySelector('#limit');
+let select = document.querySelector('#limit');
 
-if (selectPatient != undefined) {
-    selectPatient.onchange = function () {
-        let valuePatient = document.getElementById('limit').value;
-        document.location.href = '/controllers/liste-patientsCtrl.php?limit=' + valuePatient;
+if (select != undefined) {
+    select.onchange = function () {
+        let pageType = document.getElementById('pageType').value;
+        let limit = document.getElementById('limit').value;
+        document.location.href = '/controllers/paginationCtrl.php?pageType=' + pageType  + '&limit=' + limit;
     }
 }
-
-
-// Gestion du select pour choisir le nombre de rdv à afficher
-
-let selectAptmt = document.querySelector('#limitAptmt');
-
-if (selectAptmt != undefined) {
-    selectAptmt.onchange = function () {
-        let valueAptmt = document.getElementById('limitAptmt').value;
-        document.location.href = '/controllers/liste-rendezvousCtrl.php?limitAptmt=' + valueAptmt;
-    }
-}
-
-// let select = document.querySelector('#limit');
-
-// if (select != undefined) {
-//     select.onchange = function () {
-//         let value = document.getElementById('limit').value;
-//         document.location.href = '/controllers/paginationCtrl.php?pageType=' + pageType  + '&limit=' + value;
-//     }
-// }

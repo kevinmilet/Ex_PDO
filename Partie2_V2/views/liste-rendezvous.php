@@ -1,3 +1,5 @@
+<input type="hidden" id="pageType" value="2">
+
 <!-- Affichage des erreurs et des messages -->
 <?php
 if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING))) {
@@ -44,23 +46,23 @@ if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE
     </div>
     <nav class="pt-3">
         <ul class="pagination">
-            <li class="page-item <?= ($currentPageAptmt == 1) ? "disabled" : "" ?>">
-                <a class="page-link" href="?pageAptmt=<?=$currentPageAptmt - 1 ?>&limitAptmt=<?= $limitSelectedAptmt ?>" tabindex="-1">Précedent</a>
+            <li class="page-item <?= ($currentPage == 1) ? "disabled" : "" ?>">
+                <a class="page-link" href="?pageType=2&page=<?=$currentPage - 1 ?>&limit=<?= $_SESSION['limit'] ?>" tabindex="-1">Précedent</a>
             </li>
-            <?php for ($page = 1; $page <= $pagesAptmt; $page++): ?>
-                <li class="page-item <?= ($currentPageAptmt == $page) ? "active" : "" ?>">
-                    <a href="?pageAptmt=<?= $page ?>&limitAptmt=<?= $limitSelectedAptmt ?>" class="page-link"><?= $page ?></a>
+            <?php for ($page = 1; $page <= $pages; $page++): ?>
+                <li class="page-item <?= ($currentPage == $page) ? "active" : "" ?>">
+                    <a href="?pageType=2&page=<?= $page ?>&limit=<?= $_SESSION['limit'] ?>" class="page-link"><?= $page ?></a>
                 </li>
             <?php endfor ?>
-            <li class="page-item <?= ($currentPageAptmt == $pagesAptmt) ? "disabled" : "" ?>">
-                <a class="page-link" href="?pageAptmt=<?=$currentPageAptmt + 1 ?>&limitAptmt=<?= $limitSelectedAptmt ?>">Suivant</a>
+            <li class="page-item <?= ($currentPage == $pages) ? "disabled" : "" ?>">
+                <a class="page-link" href="?pageType=2&page=<?=$currentPage + 1 ?>&limit=<?= $_SESSION['limit'] ?>">Suivant</a>
             </li>
             <li>
-                <select name="limitAptmt" id="limitAptmt" class="form-control">
-                    <option value="5" <?= $limitSelectedAptmt == 5 ? 'selected' : '';?>>5</option>
-                    <option value="10" <?= $limitSelectedAptmt == 10 ? 'selected' : '';?>>10</option>
-                    <option value="15" <?= $limitSelectedAptmt == 15 ? 'selected' : '';?>>15</option>
-                    <option value="20" <?= $limitSelectedAptmt == 20 ? 'selected' : '';?>>20</option>
+                <select name="limit" id="limit" class="form-control">
+                    <option value="5" <?= $_SESSION['limit'] == 5 ? 'selected' : '';?>>5</option>
+                    <option value="10" <?= $_SESSION['limit'] == 10 ? 'selected' : '';?>>10</option>
+                    <option value="15" <?= $_SESSION['limit'] == 15 ? 'selected' : '';?>>15</option>
+                    <option value="20" <?= $_SESSION['limit'] == 20 ? 'selected' : '';?>>20</option>
                 </select>
             </li>
         </ul>

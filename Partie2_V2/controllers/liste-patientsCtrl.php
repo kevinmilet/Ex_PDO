@@ -1,22 +1,10 @@
 <?php
 $pageTitle = "Cabinet médical - Liste des patients";
+
+// inclusion du fichier de config
+require_once(dirname(__FILE__).'/../utils/config.php');
 require_once(dirname(__FILE__).'/../models/Patient.php');
 
-$pageType = 1;
-
-//*****************************************************************************************************
-//
-// Gestion du nombre de patients à afficher grace au select
-//
-//*****************************************************************************************************
-
-if (isset($_GET['limit']) && !empty($_GET['limit'])) {
-    $limitSelected = intval(trim(filter_input(INPUT_GET, 'limit', FILTER_SANITIZE_NUMBER_INT)));
-
-} else {
-    $limitSelected = 5;
-
-}
 
 //*****************************************************************************************************
 //
@@ -36,7 +24,7 @@ $result = Patient::nbPatient();
 $nbPatients = intval($result->nb_patients);
 
 // on fixe la limite de patients à afficher
-$limite = $limitSelected;
+$limite = $_SESSION['limit'];
 
 // On détermine le nombre pages qu'il y aura
 $pages = ceil($nbPatients / $limite);

@@ -1,29 +1,32 @@
 <?php
-session_start();
+require_once(dirname(__FILE__).'/../utils/config.php');
 
+// On récupére la limite choisie et on nettoie les données réçues
 if (isset($_GET['limit']) && !empty($_GET['limit'])) {
-    $limitSelected = intval(trim(filter_input(INPUT_GET, 'limit', FILTER_SANITIZE_NUMBER_INT)));
-    $_SESSION['limit'] = $limitSelected;
+    $_SESSION['limit'] = intval(trim(filter_input(INPUT_GET, 'limit', FILTER_SANITIZE_NUMBER_INT)));
 
     } else {
         $_SESSION['limit'] = 5;
 
     }
 
-if (isset($_GET['page']) && !empty($_GET['page'])) {
-    $currentPageAptmt = intval(trim(filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT)));
+// On récupére le type de page et on nettoie les données réçues
+// pageType = 1 : Liste patients
+// pageType = 2 : Liste rdv
+if (isset($_GET['pageType']) && !empty($_GET['pageType'])) {
+    $pageType = intval(trim(filter_input(INPUT_GET, 'pageType', FILTER_SANITIZE_NUMBER_INT)));
+    
 
-    }else{
-        $currentPage = 1;
-        
+    } else {
+        $pageType = 1;
+
+    }
+
+switch ($pageType) {
+    case 1:
+        header('location: /controllers/liste-patientsCtrl.php');
+        break;
+    case 2:
+        header('location: /controllers/liste-rendezvousCtrl.php');
+        break;
 }
-
-$result = Appointment::nbAppointment();
-
-$nb = intval($result->nb_aptmt);
-
-$limite = $limitSelected;
-
-$pages = ceil($nbAptmt / $limite);
-
-$firstpage = ($currentPage * $limite) - $limite;

@@ -55,7 +55,7 @@ class Appointment {
     }
 
     // methode liste des rendez-vous
-    public static function listAppointments($firstpageAptmt, $limiteAptmt) {
+    public static function listAppointments($firstpage, $limite) {
 
         $pdo = Database::dbconnect();
 
@@ -67,8 +67,8 @@ class Appointment {
         try {
             $stmt1 = $pdo->exec($sqllocale);
             $stmt = $pdo->prepare($sql);
-            $stmt->bindValue(':firstpage', $firstpageAptmt, PDO::PARAM_INT);
-            $stmt->bindValue(':limite', $limiteAptmt, PDO::PARAM_INT);
+            $stmt->bindValue(':firstpage', $firstpage, PDO::PARAM_INT);
+            $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
             $stmt->execute();
             $aptmtList = $stmt->fetchAll();
             

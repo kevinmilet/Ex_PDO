@@ -1,10 +1,3 @@
-<?php
-session_start();
-// inclusion du fichier de config
-require_once(dirname(__FILE__).'/../../utils/config.php');
-
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 

@@ -1,5 +1,6 @@
 <?php
 $pageTitle = "Cabinet médical - Ajout Rendez-vous";
+require_once(dirname(__FILE__).'/../utils/config.php');
 require_once(dirname(__FILE__).'/../utils/regex.php');
 require_once(dirname(__FILE__).'/../models/Patient.php');
 require_once(dirname(__FILE__).'/../models/Appointment.php');
@@ -69,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 }
 
-
+// Inclusion des vues
 include(dirname(__FILE__).'/../views/templates/header.php');
 
 include(dirname(__FILE__).'/../views/ajout-rendezvous.php');

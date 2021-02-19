@@ -1,5 +1,7 @@
 <?php
 // fichier de configuration
+session_start();
+$_SESSION['limit'] = $_SESSION['limit'] ?? 5;
 
 define('DB_DATABASE_NAME', 'hospitale2n');
 define('DB_USER_NAME', 'kevin_hospital');
@@ -19,6 +21,7 @@ $msg = array(
     '8' => ['type' => 'alert-danger', 'msg' => 'Le patient n\'a pas été supprimé'],
     '9' => ['type' => 'alert-danger', 'msg' => 'Le rendez-vous n\'a pas été ajouté'],
     '10' => ['type' => 'alert-success', 'msg' => 'Le rendez-vous a été ajouté'],
+    '11' => ['type' => 'alert-success', 'msg' => 'Le patient et le rendez-vous ont été ajoutés'],
     '23000' => ['type' => 'alert-danger', 'msg' => 'Le mail est déjà existant'],
     
 );
