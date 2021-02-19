@@ -100,7 +100,6 @@ class Appointment {
         } catch (PDOException $e) {
             return false;
         }
-        
     }
 
     // methode de modification de rendez-vous
@@ -145,7 +144,6 @@ class Appointment {
         } catch (PDOException $e) {
             return false;
         }
-        
     }
 
     // supprimer un rendez-vous
@@ -163,7 +161,5 @@ class Appointment {
         } catch (PDOException $e) {
             return false;
         }
-    
     }
-
 }

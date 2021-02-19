@@ -2,6 +2,7 @@
 session_start();
 // inclusion du fichier de config
 require_once(dirname(__FILE__).'/../../utils/config.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -18,12 +19,13 @@ require_once(dirname(__FILE__).'/../../utils/config.php');
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.2.0/mdb.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/assets/css/style.css" class="css">
-    <title>Cabinet Medical</title>
+    <title><?=$pageTitle ?? 'Cabinet Médical'?></title>
 </head>
 
 <body>
 
 <?php
+
 // inclusion de la navbar
 include(dirname(__FILE__).'/navbar.php');
 

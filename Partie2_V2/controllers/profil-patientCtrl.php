@@ -1,4 +1,5 @@
 <?php
+$pageTitle = "Cabinet médical - Fiche patient";
 // Inclusion des models
 require_once(dirname(__FILE__).'/../models/Patient.php');
 require_once(dirname(__FILE__).'/../models/Appointment.php');

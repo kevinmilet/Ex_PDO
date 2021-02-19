@@ -1,4 +1,5 @@
 <?php
+$pageTitle = "Cabinet médical - Liest des rendes-vous";
 require_once(dirname(__FILE__).'/../models/Appointment.php');
 
 // Affichage de la liste des rendez-vous

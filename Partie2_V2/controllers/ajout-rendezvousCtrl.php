@@ -1,4 +1,5 @@
 <?php
+$pageTitle = "Cabinet médical - Ajout Rendez-vous";
 require_once(dirname(__FILE__).'/../utils/regex.php');
 require_once(dirname(__FILE__).'/../models/Patient.php');
 require_once(dirname(__FILE__).'/../models/Appointment.php');

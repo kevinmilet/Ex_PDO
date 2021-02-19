@@ -1,4 +1,5 @@
 <?php
+$pageTitle = "Cabinet médical - Ajout Patient et Rendez-vous";
 // inclusion des models et des regex pour les validations
 require_once(dirname(__FILE__).'/../utils/regex.php');
 require_once(dirname(__FILE__).'/../models/Patient.php');

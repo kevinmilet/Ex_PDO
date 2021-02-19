@@ -1,4 +1,5 @@
 <?php
+$pageTitle = "Cabinet médical - Liste des patients";
 require_once(dirname(__FILE__).'/../models/Patient.php');
 
 $pageType = 1;
