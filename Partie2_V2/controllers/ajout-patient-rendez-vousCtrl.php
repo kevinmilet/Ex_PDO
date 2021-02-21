@@ -106,10 +106,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $aptmt = new Appointment($dateHour, $idPatients);
             $resultAptmt = $aptmt->addAppointment();
 
-            if ($resultAptmt === true) {
-                header('location: /controllers/liste-patientsCtrl.php?code=11');
-            }   
+            if ($resultAptmt !== true) {
+                header('location: /controllers/liste-patientsCtrl.php?code=4');
+            } 
         } 
+        
     } else {
         $code = $result;
     }
