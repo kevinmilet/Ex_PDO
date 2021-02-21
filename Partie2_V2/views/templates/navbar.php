@@ -30,9 +30,9 @@
                 <li>
                     <a class="nav-link" href="/controllers/liste-rendezvousCtrl.php"><span class="far fa-calendar-check"></span> Liste des rendez-vous</a>
                 </li>
-                <li>
+                <!-- <li>
                     <a class="nav-link" href="/controllers/ajout-patient-rendez-vousCtrl.php"><span class="far fa-users-medical"></span> Ajouter un patient et un rendez-vous</a>
-                </li>
+                </li> -->
             </ul>
             
         </div>
