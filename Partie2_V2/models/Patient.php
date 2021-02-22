@@ -64,8 +64,7 @@ class Patient {
                 $stmt->bindValue(':birthdate', $this->_birthdate, PDO::PARAM_STR);
                 $stmt->bindValue(':phone', $this->_phone, PDO::PARAM_STR);
                 $stmt->bindValue(':mail', $this->_mail, PDO::PARAM_STR);
-                $stmt->execute();
-                return $this->_pdo->lastInsertId();
+                return $stmt->execute();
 
             } catch (PDOException $e) {
                 return false;
@@ -215,6 +214,29 @@ class Patient {
         } catch (PDOException $e) {
             return false;
         }
+    }
 
+    // Methode ajout patient + rdv simultanément
+    public function addPatientAndAptmt($patient, $aptmt) {
+
+        if(!$this->isExist($this->_mail)) {
+            
+            try {
+                
+                $this->_pdo->beginTransaction();
+                
+                $patient->addPatient();
+
+                $this->_pdo->lastInsertId();
+                
+                $aptmt->addAppointment();
+
+                $this->_pdo->commit();
+
+            } catch (PDOException $e){
+                $this->_pdo->rollBack();
+                return false;
+            }
+        }
     }
 }

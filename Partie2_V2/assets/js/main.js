@@ -9,3 +9,7 @@ if (select != undefined) {
         document.location.href = '/controllers/paginationCtrl.php?pageType=' + pageType  + '&limit=' + limit;
     }
 }
+
+// Gestion suppression patient
+
+
