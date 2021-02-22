@@ -64,8 +64,9 @@ class Patient {
                 $stmt->bindValue(':birthdate', $this->_birthdate, PDO::PARAM_STR);
                 $stmt->bindValue(':phone', $this->_phone, PDO::PARAM_STR);
                 $stmt->bindValue(':mail', $this->_mail, PDO::PARAM_STR);
-                return $stmt->execute();
-                
+                $stmt->execute();
+                return $this->_pdo->lastInsertId();
+
             } catch (PDOException $e) {
                 return false;
             }

@@ -19,20 +19,20 @@
             
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/controllers/ajout-patientCtrl.php"><span class="far fa-users-medical"></span> Ajouter un patient</a>
+                    <a class="nav-link" href="/controllers/liste-patientsCtrl.php?page=1"><span class="far fa-list-alt"></span> Liste des patients</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="/controllers/liste-rendezvousCtrl.php"><span class="far fa-calendar-check"></span> Liste des rendez-vous</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/controllers/liste-patientsCtrl.php?page=1"><span class="far fa-list-alt"></span> Liste des patients</a>
+                    <a class="nav-link" href="/controllers/ajout-patientCtrl.php"><span class="far fa-users-medical"></span> Nouveau un patient</a>
                 </li>
                 <li>
                     <a class="nav-link" href="/controllers/ajout-rendezvousCtrl.php"><span class="far fa-calendar-plus"></span> Nouveau rendez-vous</a>
                 </li>
                 <li>
-                    <a class="nav-link" href="/controllers/liste-rendezvousCtrl.php"><span class="far fa-calendar-check"></span> Liste des rendez-vous</a>
-                </li>
-                <!-- <li>
                     <a class="nav-link" href="/controllers/ajout-patient-rendez-vousCtrl.php"><span class="far fa-users-medical"></span> Ajouter un patient et un rendez-vous</a>
-                </li> -->
+                </li>
             </ul>
             
         </div>

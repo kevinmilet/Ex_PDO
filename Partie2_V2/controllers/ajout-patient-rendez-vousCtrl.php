@@ -97,19 +97,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($errors)) {
         $dateHour = $date.' '.$hour.':00'; // YYYY-MM-DD HH:MM:SS
         
-        // Enregistrement dans la table Patients
         $patient = new Patient($lastname, $firstname, $birthdate, $phone, $mail);
         $result = $patient->addPatient();
 
-        if ($result === true) {
-            $idPatients = Patient::getPatient($id);
-            $aptmt = new Appointment($dateHour, $idPatients);
+        if (!$result) {
+            header('location: /controllers/liste-patientsCtrl.php?code=4');
+            
+        } else {
+            $idPatients = Patient::getPatient($result);
+                        
+            $aptmt = new Appointment($dateHour, $idPatients->id);
             $resultAptmt = $aptmt->addAppointment();
 
             if ($resultAptmt !== true) {
                 header('location: /controllers/liste-patientsCtrl.php?code=4');
-            } 
-        } 
+            }
+
+            header('location: /controllers/liste-patientsCtrl.php?code=11');
+        }
         
     } else {
         $code = $result;
