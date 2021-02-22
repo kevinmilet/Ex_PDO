@@ -22,6 +22,7 @@ if (isset($_GET['pageType']) && !empty($_GET['pageType'])) {
 
     }
 
+// on redirige en fonction de la page
 switch ($pageType) {
     case 1:
         header('location: /controllers/liste-patientsCtrl.php');

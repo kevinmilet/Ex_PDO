@@ -20,7 +20,7 @@ class Appointment {
 
         // préparation de la requète
         $sql = "INSERT INTO `appointments` (`dateHour`, `idPatients`)
-        VALUES (:dateHour, :idPatients);";
+                VALUES (:dateHour, :idPatients);";
 
         // execution de la requète
         try {
@@ -41,7 +41,8 @@ class Appointment {
 
         $pdo = Database::dbconnect();
 
-        $sql = "SELECT COUNT(*) AS 'nb_aptmt' FROM `appointments`;";
+        $sql = "SELECT COUNT(*) AS 'nb_aptmt' 
+                FROM `appointments`;";
 
         try {
             $stmt = $pdo->query($sql);
@@ -61,7 +62,10 @@ class Appointment {
 
         // préparation de la requète
         $sqllocale = "SET lc_time_names = 'fr_FR';";
-        $sql = "SELECT `appointments`.`id` AS 'idAptmt', `patients`.`id` AS 'IdPatient', `patients`.`lastname` AS 'lastname', `patients`.`firstname` AS 'firstname', DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour' FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` LIMIT :firstpage, :limite;";
+        $sql = "SELECT `appointments`.`id` AS 'idAptmt', `patients`.`id` AS 'IdPatient', `patients`.`lastname` AS 'lastname', `patients`.`firstname` AS 'firstname', DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour' 
+                FROM `appointments` 
+                LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` 
+                LIMIT :firstpage, :limite;";
 
         // execution de la requete
         try {
@@ -79,14 +83,17 @@ class Appointment {
         }
     }
 
-    // methode affichage d'un rendez-vous
+    // methode affichage d'un rendez-vous d'un patient
     public static function getAppointment($idAptmt) {
 
         $pdo = Database::dbconnect();
 
         // préparation de la requete
         $sqllocale = "SET lc_time_names = 'fr_FR';";
-        $sql = "SELECT *, DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour' FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` WHERE `appointments`.`id` = :aptmt_id;";
+        $sql = "SELECT *, DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour' 
+                FROM `appointments` 
+                LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` 
+                WHERE `appointments`.`id` = :aptmt_id;";
 
         // execution de la requete
         try {
@@ -106,7 +113,9 @@ class Appointment {
     public function updateAppointment($dateHour, $idAptmt) {
 
         // préparation de la requete
-        $sql = "UPDATE `appointments` SET `dateHour` = :dateHour WHERE `id` = :idAptmt;";
+        $sql = "UPDATE `appointments` 
+                SET `dateHour` = :dateHour 
+                WHERE `id` = :idAptmt;";
 
         // Execution de la requete
         try {
@@ -130,7 +139,11 @@ class Appointment {
 
         // préparation de la requete
         $sqllocale = "SET lc_time_names = 'fr_FR';";
-        $sql = "SELECT DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour', `appointments`.`id` AS 'aptmtID' FROM `appointments` LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` WHERE `appointments`.`idPatients` = :id ORDER BY `dateHour`;";
+        $sql = "SELECT DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour', `appointments`.`id` AS 'aptmtID' 
+                FROM `appointments` 
+                LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` 
+                WHERE `appointments`.`idPatients` = :id 
+                ORDER BY `dateHour`;";
 
         // execution de la requete
         try {
@@ -151,7 +164,8 @@ class Appointment {
 
         $pdo = Database::dbconnect();
 
-        $sql = "DELETE FROM `appointments` WHERE `id` = :idAptmt;";
+        $sql = "DELETE FROM `appointments` 
+                WHERE `id` = :idAptmt;";
 
         try {
             $stmt = $pdo->prepare($sql);

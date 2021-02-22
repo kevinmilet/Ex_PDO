@@ -25,7 +25,9 @@ class Patient {
     // methode testant si un patient existe dans la base de donnée
     public function isExist($mail) {
 
-        $sql = "SELECT `id` FROM `patients` WHERE `mail`= :mail;";
+        $sql = "SELECT `id` 
+                FROM `patients` 
+                WHERE `mail`= :mail;";
 
         try {
             $stmt = $this->_pdo->prepare($sql);
@@ -51,7 +53,7 @@ class Patient {
             
             // préparation de la requète
             $sql = "INSERT INTO `patients` (`lastname`, `firstname`, `birthdate`, `phone`, `mail`)
-                            VALUES (:lastname, :firstname, :birthdate, :phone, :mail);";
+                    VALUES (:lastname, :firstname, :birthdate, :phone, :mail);";
 
             // execution de la requète
             try {
@@ -79,7 +81,8 @@ class Patient {
 
         $pdo = Database::dbconnect();
 
-        $sql = "SELECT COUNT(*) AS 'nb_patients' FROM `patients`;";
+        $sql = "SELECT COUNT(*) AS 'nb_patients' 
+                FROM `patients`;";
 
         try {
             $stmt = $pdo->query($sql);
@@ -97,7 +100,9 @@ class Patient {
 
         $pdo = Database::dbconnect();
 
-        $sql = "SELECT * FROM `patients` LIMIT :firstpage, :limite;";
+        $sql = "SELECT * 
+                FROM `patients` 
+                LIMIT :firstpage, :limite;";
         
         try {
             $stmt =$pdo->prepare($sql);
@@ -119,7 +124,10 @@ class Patient {
         $pdo = Database::dbconnect();
 
         try {
-            $sql = "SELECT * FROM `patients` WHERE `id` = :id;";
+            $sql = "SELECT * 
+                    FROM `patients` 
+                    WHERE `id` = :id;";
+
             $stmt = $pdo->prepare($sql);
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
@@ -136,7 +144,9 @@ class Patient {
     public function updatePatient($id) {
 
         // Préparation de la requete d'ajout d'un nouveau patient
-        $sql = "UPDATE `patients` SET `lastname` = :lastname, `firstname` = :firstname, `birthdate` = :birthdate, `phone` = :phone, `mail` = :mail WHERE `id` = :id;";
+        $sql = "UPDATE `patients` 
+                SET `lastname` = :lastname, `firstname` = :firstname, `birthdate` = :birthdate, `phone` = :phone, `mail` = :mail 
+                WHERE `id` = :id;";
 
         // Exécution de la requête
         try {
@@ -162,7 +172,8 @@ class Patient {
 
         $pdo = Database::dbconnect();
 
-        $sql = "DELETE FROM `patients` WHERE `id` = :id;";
+        $sql = "DELETE FROM `patients` 
+                WHERE `id` = :id;";
 
         try {
             $stmt = $pdo->prepare($sql);
@@ -179,7 +190,12 @@ class Patient {
 
         $pdo = Database::dbconnect();
 
-        $sql = "SELECT * FROM `patients` WHERE `lastname` LIKE :search OR `firstname` LIKE :search;";
+        $sql = "SELECT * 
+                FROM `patients` 
+                WHERE `lastname` 
+                LIKE :search 
+                OR `firstname` 
+                LIKE :search;";
 
         try {
             $stmt = $pdo->prepare($sql);
