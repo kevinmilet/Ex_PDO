@@ -113,9 +113,9 @@ class Appointment {
     public function updateAppointment($dateHour, $idAptmt) {
 
         // préparation de la requete
-        $sql = "UPDATE `appointments` 
+        $sql = 'UPDATE `appointments` 
                 SET `dateHour` = :dateHour 
-                WHERE `id` = :idAptmt;";
+                WHERE `id` = :idAptmt;';
 
         // Execution de la requete
         try {

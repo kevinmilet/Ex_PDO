@@ -1,6 +1,7 @@
 <?php
 // inclusion de la connection à la BDD
 require_once(dirname(__FILE__).'/../utils/Database.php');
+require_once(dirname(__FILE__).'/../models/Appointment.php');
 
 class Patient {
     
@@ -10,6 +11,7 @@ class Patient {
     private $_phone;
     private $_mail;
     private $_pdo;
+    private $_aptmt;
 
     // methode constructeur qui hydrate l'objet patient
     public function __construct($lastname = null, $firstname = null, $birthdate = null, $phone = null, $mail = null) {
@@ -19,6 +21,7 @@ class Patient {
         $this->_phone = $phone;
         $this->_mail = $mail;
         $this->_pdo = Database::dbconnect();
+        $this->_aptmt = new Appointment();
 
     }
 
@@ -64,7 +67,10 @@ class Patient {
                 $stmt->bindValue(':birthdate', $this->_birthdate, PDO::PARAM_STR);
                 $stmt->bindValue(':phone', $this->_phone, PDO::PARAM_STR);
                 $stmt->bindValue(':mail', $this->_mail, PDO::PARAM_STR);
-                return $stmt->execute();
+                $stmt->execute();
+
+                $lastId = $this->_pdo->lastInsertId();
+                return $lastId;
 
             } catch (PDOException $e) {
                 return false;
@@ -217,26 +223,22 @@ class Patient {
     }
 
     // Methode ajout patient + rdv simultanément
-    public function addPatientAndAptmt($patient, $aptmt) {
-
-        if(!$this->isExist($this->_mail)) {
-            
-            try {
+    public static function addPatientAndAptmt($patient, $dateHour) {
+        
+        $pdo = Database::dbconnect();
+        
                 
-                $this->_pdo->beginTransaction();
-                
-                $patient->addPatient();
+        $pdo->beginTransaction();
+        
+        $idPatient = $patient->addPatient();
+        
+        $aptmt = new Appointment($dateHour, $idPatient);
+        
+        $aptmt->addAppointment();
+        
+        $pdo->commit();           
 
-                $this->_pdo->lastInsertId();
-                
-                $aptmt->addAppointment();
-
-                $this->_pdo->commit();
-
-            } catch (PDOException $e){
-                $this->_pdo->rollBack();
-                return false;
-            }
-        }
+        $pdo->rollBack();
+        
     }
 }

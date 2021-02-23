@@ -98,30 +98,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $dateHour = $date.' '.$hour.':00'; // YYYY-MM-DD HH:MM:SS
         
         $patient = new Patient($lastname, $firstname, $birthdate, $phone, $mail);
-        $aptmt = new Appointment($dateHour, $idPatients);
-        // $result = $patient->addPatient();
-        var_dump($patient);
-        var_dump($aptmt);
-    //     if (!$patient || !$aptmt) {
-    //         header('location: /controllers/liste-patientsCtrl.php?code=4');
-            
-    //     } else {
-    //         $result = $patient->addPatientAndAptmt($patient, $aptmt);
-    //         // $idPatients = Patient::getPatient($result);
-                        
-    //         // $aptmt = new Appointment($dateHour, $idPatients->id);
-    //         // $resultAptmt = $aptmt->addAppointment();
-
-    //         // if ($resultAptmt !== true) {
-    //         //     header('location: /controllers/liste-patientsCtrl.php?code=4');
-    //         // }
-
-    //         header('location: /controllers/liste-patientsCtrl.php?code=11');
-    //     }
         
-    // } else {
-    //     $code = $result;
-    }
+        if (!$patient) {
+            header('location: /controllers/liste-patientsCtrl.php?code=4');
+            
+        } else {
+            $result = Patient::addPatientAndAptmt($patient, $dateHour);
+            var_dump($result);
+
+            if ($result === null) {
+                header('location: /controllers/liste-patientsCtrl.php?code=4');
+
+            } else {
+
+                header('location: /controllers/liste-patientsCtrl.php?code=11');
+            }
+
+        
+        }
+        
+    } 
 }
 
 

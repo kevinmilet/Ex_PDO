@@ -8,7 +8,7 @@ class Database {
             $pdo = new PDO('mysql:dbname='.DB_DATABASE_NAME.';host=localhost', DB_USER_NAME, DB_PWD);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-
+var_dump($pdo);
         } catch (PDOException $e) {
             echo '<div class="alert alert-danger">'.$e->getMessage().'</div>';
 
