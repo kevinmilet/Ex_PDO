@@ -11,7 +11,7 @@ class Patient {
     private $_phone;
     private $_mail;
     private $_pdo;
-    private $_aptmt;
+    private $_lastId;
 
     // methode constructeur qui hydrate l'objet patient
     public function __construct($lastname = null, $firstname = null, $birthdate = null, $phone = null, $mail = null) {
@@ -28,9 +28,9 @@ class Patient {
     // methode testant si un patient existe dans la base de donnée
     public function isExist($mail) {
 
-        $sql = "SELECT `id` 
+        $sql = 'SELECT `id` 
                 FROM `patients` 
-                WHERE `mail`= :mail;";
+                WHERE `mail`= :mail;';
 
         try {
             $stmt = $this->_pdo->prepare($sql);
@@ -55,8 +55,8 @@ class Patient {
         if(!$this->isExist($this->_mail)) { // teste si le patient existe ou non dans la bdd
             
             // préparation de la requète
-            $sql = "INSERT INTO `patients` (`lastname`, `firstname`, `birthdate`, `phone`, `mail`)
-                    VALUES (:lastname, :firstname, :birthdate, :phone, :mail);";
+            $sql = 'INSERT INTO `patients` (`lastname`, `firstname`, `birthdate`, `phone`, `mail`)
+                    VALUES (:lastname, :firstname, :birthdate, :phone, :mail);';
 
             // execution de la requète
             try {
@@ -69,8 +69,8 @@ class Patient {
                 $stmt->bindValue(':mail', $this->_mail, PDO::PARAM_STR);
                 $stmt->execute();
 
-                $lastId = $this->_pdo->lastInsertId();
-                return $lastId;
+                $this->_lastId = $this->_pdo->lastInsertId();
+                return $this->_lastId;
 
             } catch (PDOException $e) {
                 return false;
@@ -87,8 +87,8 @@ class Patient {
 
         $pdo = Database::dbconnect();
 
-        $sql = "SELECT COUNT(*) AS 'nb_patients' 
-                FROM `patients`;";
+        $sql = 'SELECT COUNT(*) AS `nb_patients` 
+                FROM `patients`;';
 
         try {
             $stmt = $pdo->query($sql);
@@ -106,9 +106,9 @@ class Patient {
 
         $pdo = Database::dbconnect();
 
-        $sql = "SELECT * 
+        $sql = 'SELECT * 
                 FROM `patients` 
-                LIMIT :firstpage, :limite;";
+                LIMIT :firstpage, :limite;';
         
         try {
             $stmt =$pdo->prepare($sql);
@@ -130,9 +130,9 @@ class Patient {
         $pdo = Database::dbconnect();
 
         try {
-            $sql = "SELECT * 
+            $sql = 'SELECT * 
                     FROM `patients` 
-                    WHERE `id` = :id;";
+                    WHERE `id` = :id;';
 
             $stmt = $pdo->prepare($sql);
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -150,9 +150,9 @@ class Patient {
     public function updatePatient($id) {
 
         // Préparation de la requete d'ajout d'un nouveau patient
-        $sql = "UPDATE `patients` 
+        $sql = 'UPDATE `patients` 
                 SET `lastname` = :lastname, `firstname` = :firstname, `birthdate` = :birthdate, `phone` = :phone, `mail` = :mail 
-                WHERE `id` = :id;";
+                WHERE `id` = :id;';
 
         // Exécution de la requête
         try {
@@ -178,8 +178,8 @@ class Patient {
 
         $pdo = Database::dbconnect();
 
-        $sql = "DELETE FROM `patients` 
-                WHERE `id` = :id;";
+        $sql = 'DELETE FROM `patients` 
+                WHERE `id` = :id;';
 
         try {
             $stmt = $pdo->prepare($sql);
@@ -196,12 +196,12 @@ class Patient {
 
         $pdo = Database::dbconnect();
 
-        $sql = "SELECT * 
+        $sql = 'SELECT * 
                 FROM `patients` 
                 WHERE `lastname` 
                 LIKE :search 
                 OR `firstname` 
-                LIKE :search;";
+                LIKE :search;';
 
         try {
             $stmt = $pdo->prepare($sql);
@@ -223,22 +223,44 @@ class Patient {
     }
 
     // Methode ajout patient + rdv simultanément
-    public static function addPatientAndAptmt($patient, $dateHour) {
+    public static function addPatientAndAptmt($patient, $aptmt) {
         
         $pdo = Database::dbconnect();
         
-                
-        $pdo->beginTransaction();
-        
-        $idPatient = $patient->addPatient();
-        
-        $aptmt = new Appointment($dateHour, $idPatient);
-        
-        $aptmt->addAppointment();
-        
-        $pdo->commit();           
+        try {
+            $pdo->beginTransaction();
+            
+            $newPatient = $patient->addPatient();
 
-        $pdo->rollBack();
+            if ($newPatient === false) {
+
+                throw new PDOException('Le patient n\' est pas ajouté');
+            }
+            
+            $aptmt->setId($patient->_lastId);
+            
+            $newAptmt = $aptmt->addAppointment();
+
+            if ($newAptmt === false) {
+
+                throw new PDOException('Le rdv n\'est pas ajouté');
+            }
+            
+            return $pdo->commit();
+
+        } catch (PDOException $e) {
+            $pdo->rollBack();
+            return false;
+        }
+        
+        
+        
+                
+        
+        
+            
+
+        
         
     }
 }

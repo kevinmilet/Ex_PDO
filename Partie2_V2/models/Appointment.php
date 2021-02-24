@@ -15,12 +15,20 @@ class Appointment {
         $this->_pdo = Database::dbconnect();
     }
 
+    // public function getDateHour() {
+    //     return $this->_dateHour;
+    // }
+
+    public function setId ($id) {
+        $this->_idPatients = $id;
+    }
+
     // methode ajout rendez-vous
     public function addAppointment() {
 
         // préparation de la requète
-        $sql = "INSERT INTO `appointments` (`dateHour`, `idPatients`)
-                VALUES (:dateHour, :idPatients);";
+        $sql = 'INSERT INTO `appointments` (`dateHour`, `idPatients`)
+                VALUES (:dateHour, :idPatients);';
 
         // execution de la requète
         try {
@@ -41,8 +49,8 @@ class Appointment {
 
         $pdo = Database::dbconnect();
 
-        $sql = "SELECT COUNT(*) AS 'nb_aptmt' 
-                FROM `appointments`;";
+        $sql = 'SELECT COUNT(*) AS `nb_aptmt` 
+                FROM `appointments`;';
 
         try {
             $stmt = $pdo->query($sql);
@@ -61,11 +69,11 @@ class Appointment {
         $pdo = Database::dbconnect();
 
         // préparation de la requète
-        $sqllocale = "SET lc_time_names = 'fr_FR';";
-        $sql = "SELECT `appointments`.`id` AS 'idAptmt', `patients`.`id` AS 'IdPatient', `patients`.`lastname` AS 'lastname', `patients`.`firstname` AS 'firstname', DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour' 
+        $sqllocale = 'SET lc_time_names = \'fr_FR\';';
+        $sql = 'SELECT `appointments`.`id` AS `idAptmt`, `patients`.`id` AS `IdPatient`, `patients`.`lastname` AS `lastname`, `patients`.`firstname` AS `firstname`, DATE_FORMAT(DATE(`dateHour`), \'%a %e %M %Y\') AS `date`, DATE_FORMAT(TIME(`dateHour`), \'%H:%i\') AS `hour` 
                 FROM `appointments` 
                 LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` 
-                LIMIT :firstpage, :limite;";
+                LIMIT :firstpage, :limite;';
 
         // execution de la requete
         try {
@@ -89,11 +97,11 @@ class Appointment {
         $pdo = Database::dbconnect();
 
         // préparation de la requete
-        $sqllocale = "SET lc_time_names = 'fr_FR';";
-        $sql = "SELECT *, DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour' 
+        $sqllocale = 'SET lc_time_names = \'fr_FR\';';
+        $sql = 'SELECT *, DATE_FORMAT(DATE(`dateHour`), \'%a %e %M %Y\') AS `date`, DATE_FORMAT(TIME(`dateHour`), \'%H:%i\') AS `hour` 
                 FROM `appointments` 
                 LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` 
-                WHERE `appointments`.`id` = :aptmt_id;";
+                WHERE `appointments`.`id` = :aptmt_id;';
 
         // execution de la requete
         try {
@@ -138,12 +146,12 @@ class Appointment {
         $pdo = Database::dbconnect();
 
         // préparation de la requete
-        $sqllocale = "SET lc_time_names = 'fr_FR';";
-        $sql = "SELECT DATE_FORMAT(DATE(`dateHour`), '%a %e %M %Y') AS 'date', DATE_FORMAT(TIME(`dateHour`), '%H:%i') AS 'hour', `appointments`.`id` AS 'aptmtID' 
+        $sqllocale = 'SET lc_time_names = \'fr_FR\';';
+        $sql = 'SELECT DATE_FORMAT(DATE(`dateHour`), \'%a %e %M %Y\') AS `date`, DATE_FORMAT(TIME(`dateHour`), \'%H:%i\') AS `hour`, `appointments`.`id` AS `aptmtID` 
                 FROM `appointments` 
                 LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` 
                 WHERE `appointments`.`idPatients` = :id 
-                ORDER BY `dateHour`;";
+                ORDER BY `dateHour`;';
 
         // execution de la requete
         try {
@@ -164,8 +172,8 @@ class Appointment {
 
         $pdo = Database::dbconnect();
 
-        $sql = "DELETE FROM `appointments` 
-                WHERE `id` = :idAptmt;";
+        $sql = 'DELETE FROM `appointments` 
+                WHERE `id` = :idAptmt;';
 
         try {
             $stmt = $pdo->prepare($sql);

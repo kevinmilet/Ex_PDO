@@ -98,24 +98,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $dateHour = $date.' '.$hour.':00'; // YYYY-MM-DD HH:MM:SS
         
         $patient = new Patient($lastname, $firstname, $birthdate, $phone, $mail);
-        
-        if (!$patient) {
-            header('location: /controllers/liste-patientsCtrl.php?code=4');
-            
+        $aptmt = new Appointment($dateHour, $idPatient = 0 );
+        $result = Patient::addPatientAndAptmt($patient, $aptmt);
+
+        if ($result === true ) {
+
+            header('location: /controllers/liste-patientsCtrl.php?code=11');
+
         } else {
-            $result = Patient::addPatientAndAptmt($patient, $dateHour);
-            var_dump($result);
 
-            if ($result === null) {
-                header('location: /controllers/liste-patientsCtrl.php?code=4');
-
-            } else {
-
-                header('location: /controllers/liste-patientsCtrl.php?code=11');
-            }
+            // $code = $result;
+            header('location: /controllers/liste-patientsCtrl.php?code=4');
+        }
 
         
-        }
+        
         
     } 
 }

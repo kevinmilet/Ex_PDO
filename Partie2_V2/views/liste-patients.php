@@ -52,7 +52,7 @@ if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE
                     <td><?= htmlentities($patient->mail) ?></td>
                     <td><a href="/controllers/liste-patientsCtrl.php?id=<?=htmlentities($patient->id)?>&delete=1"><i
                                 class="fas fa-minus-circle text-danger"></i></a></td>
-                    <!-- <td><button type="button" class="btn" data-mdb-toggle="modal" data-mdb-target="#patient-del-confirm"><i class="fas fa-minus-circle text-danger"></i></a></td> -->
+                    <!-- <td><button type="button" class="btn del-btn" data="<?=htmlentities($patient->id)?>"><i class="fas fa-minus-circle text-danger"></i></a></td> -->
                 </tr>
                 <?php endforeach ?>
 
@@ -95,7 +95,7 @@ if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h5 class="modal-title" id="patient-del-confirm-Label">Voulez-vous vraiment supprimer ce patientet ses
+                <h5 class="modal-title" id="patient-del-confirm-Label">Voulez-vous vraiment supprimer ce patient et ses
                     rendez-vous ?</h5>
             </div>
             <div class="modal-footer">
