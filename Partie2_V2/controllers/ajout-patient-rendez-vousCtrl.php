@@ -110,10 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // $code = $result;
             header('location: /controllers/liste-patientsCtrl.php?code=4');
         }
-
-        
-        
-        
     } 
 }
 
