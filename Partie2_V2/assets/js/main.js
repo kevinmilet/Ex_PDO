@@ -36,7 +36,7 @@ delBtn.forEach(element => {
                 document.getElementById('confirm2').setAttribute('href', location2);
                 break;
             default:
-                alert('Une erreur est apparue');
+                document.location.href='index.php';
         }
     })
 })
