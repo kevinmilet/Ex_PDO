@@ -100,7 +100,7 @@ if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary cancel" data-mdb-dismiss="modal">Annuler</button>
-                <a type="button" class="btn btn-primary" id="confirm"
+                <a type="button" class="btn btn-primary" id="confirm1"
                     >Confirmer</a>
             </div>
         </div>
