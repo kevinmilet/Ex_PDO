@@ -42,7 +42,7 @@ $patientsList = Patient::listPatient($firstpage, $limite);
 // Suppression d'un patient
 //
 //*****************************************************************************************************
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['delete'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id']) && isset($_GET['delete'])) {
 
     $id = intval(trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT)));
     $delete = intval(trim(filter_input(INPUT_GET, 'delete', FILTER_SANITIZE_NUMBER_INT)));

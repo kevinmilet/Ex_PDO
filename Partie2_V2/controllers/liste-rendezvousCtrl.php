@@ -31,9 +31,9 @@ $firstpage = ($currentPage * $limite) - $limite;
 $aptmtList = Appointment::listAppointments($firstpage, $limite);
 
 // Gestion suppression rendez-vous
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['aptmt_id']) && isset($_GET['delete'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id']) && isset($_GET['delete'])) {
 
-    $idAptmt = intval(trim(filter_input(INPUT_GET, 'aptmt_id', FILTER_SANITIZE_NUMBER_INT)));
+    $idAptmt = intval(trim(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT)));
     $delete = intval(trim(filter_input(INPUT_GET, 'delete', FILTER_SANITIZE_NUMBER_INT)));
 
     if ($delete == 1) {

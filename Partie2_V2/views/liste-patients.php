@@ -50,9 +50,9 @@ if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE
                     <td><?= ucwords(strftime('%d %B %Y', strtotime(htmlentities($patient->birthdate)))) ?></td>
                     <td><?= htmlentities($patient->phone) ?></td>
                     <td><?= htmlentities($patient->mail) ?></td>
-                    <td><a href="/controllers/liste-patientsCtrl.php?id=<?=htmlentities($patient->id)?>&delete=1"><i
-                                class="fas fa-minus-circle text-danger"></i></a></td>
-                    <!-- <td><button type="button" class="btn del-btn" data="<?=htmlentities($patient->id)?>"><i class="fas fa-minus-circle text-danger"></i></a></td> -->
+                    <!-- <td><a href="/controllers/liste-patientsCtrl.php?id=<?=htmlentities($patient->id)?>&delete=1"><i
+                                class="fas fa-minus-circle text-danger"></i></a></td> -->
+                    <td><button type="button" class="btn del-btn" data-mdb-toggle="modal" data-mdb-target="#patient-del-confirm" data="<?=htmlentities($patient->id)?>"><i class="fas fa-minus-circle text-danger"></i></a></td>
                 </tr>
                 <?php endforeach ?>
 
@@ -99,9 +99,9 @@ if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE
                     rendez-vous ?</h5>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Annuler</button>
-                <a type="button" class="btn btn-primary"
-                    href="/controllers/liste-patientsCtrl.php?id=<?=htmlentities($patient->id)?>&delete=1">Confirmer</a>
+                <button type="button" class="btn btn-secondary cancel" data-mdb-dismiss="modal">Annuler</button>
+                <a type="button" class="btn btn-primary" id="confirm"
+                    >Confirmer</a>
             </div>
         </div>
     </div>
