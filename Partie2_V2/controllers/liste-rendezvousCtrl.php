@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['aptmt_id']) && isset($_G
         header('location: /controllers/liste-rendezvousCtrl.php?code=12');
 
     } else {
-        if ($delAptmt === false || $delete != 1) {
+        if ($delAptmt) {
 
             header('location: /controllers/liste-rendezvousCtrl.php?code=14');
         }

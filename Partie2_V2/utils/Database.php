@@ -10,6 +10,7 @@ class Database {
 
             try {
                 self::$pdo = new PDO('mysql:dbname='.DB_DATABASE_NAME.';host=localhost', DB_USER_NAME, DB_PWD);
+                // self::$pdo = new PDO('mysql:dbname='.DB_DATABASE_NAME.';host=db5001797920.hosting-data.io', DB_USER_NAME, DB_PWD);
                 self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 self::$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 

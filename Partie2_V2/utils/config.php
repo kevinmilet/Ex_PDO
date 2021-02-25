@@ -6,6 +6,9 @@ $_SESSION['limit'] = $_SESSION['limit'] ?? 5;
 define('DB_DATABASE_NAME', 'hospitale2n');
 define('DB_USER_NAME', 'kevin_hospital');
 define('DB_PWD', 'Lou26032016!');
+// define('DB_DATABASE_NAME', 'dbs1481248'); 
+// define('DB_USER_NAME', 'dbu1319761');
+// define('DB_PWD', 'NyVrvTsCu9-SM-4');
 
 setlocale(LC_TIME, 'fr_FR.utf8','fra.utf8');
 
