@@ -251,16 +251,6 @@ class Patient {
         } catch (PDOException $e) {
             $pdo->rollBack();
             return false;
-        }
-        
-        
-        
-                
-        
-        
-            
-
-        
-        
+        }    
     }
 }
