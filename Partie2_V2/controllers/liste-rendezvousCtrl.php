@@ -36,11 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['aptmt_id']) && isset($_G
     $idAptmt = intval(trim(filter_input(INPUT_GET, 'aptmt_id', FILTER_SANITIZE_NUMBER_INT)));
     $delete = intval(trim(filter_input(INPUT_GET, 'delete', FILTER_SANITIZE_NUMBER_INT)));
 
-    if ($delete == '1') {
+    if ($delete == 1) {
 
         $delAptmt = Appointment::deleteAppointment($idAptmt);
-        $aptmtList = Appointment::listAppointments($firstpage, $limite);
+        header('location: /controllers/liste-rendezvousCtrl.php?code=12');
 
+    } else {
+        if ($delAptmt === false || $delete != 1) {
+
+            header('location: /controllers/liste-rendezvousCtrl.php?code=14');
+        }
     }
 }
 

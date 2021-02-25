@@ -54,12 +54,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['delete'])) {
         if ($delete == 1) {
             
             $delPatient = Patient::deletePatient($id);
-            $patientsList = Patient::listPatient($firstpage, $limite);
+            header('location: /controllers/liste-patientsCtrl.php?code=13');
 
         }
 
         if (!$patientsList) {
-            header('location: /controllers/liste-patientsCtrl.php?code=0');
+            header('location: /controllers/liste-patientsCtrl.php?code=8');
         }
     
     }
