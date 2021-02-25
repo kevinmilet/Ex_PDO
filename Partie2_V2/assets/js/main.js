@@ -26,15 +26,17 @@ delBtn.forEach(element => {
     element.addEventListener('click', function(event) {
         console.log(dataId);
 
-        if (pageType == 1) {
-            let location1 = '/controllers/liste-patientsCtrl.php?id=' + dataId + '=&delete=1';
-            document.getElementById('confirm1').setAttribute('href', location1);
+        switch (pageType) {
+            case '1':
+                let location1 = '/controllers/liste-patientsCtrl.php?id=' + dataId + '=&delete=1';
+                document.getElementById('confirm1').setAttribute('href', location1);
+                break;
+            case '2':
+                let location2 = '/controllers/liste-rendezvousCtrl.php?id=' + dataId + '=&delete=1';
+                document.getElementById('confirm2').setAttribute('href', location2);
+                break;
+            default:
+                alert('Une erreur est apparue');
         }
-
-        if (pageType == 2) {
-            let location2 = '/controllers/liste-rendezvousCtrl.php?id=' + dataId + '=&delete=1';
-            document.getElementById('confirm2').setAttribute('href', location2);
-        }        
-
-    });
-});
+    })
+})
