@@ -1,5 +1,5 @@
 let pageType = document.getElementById('pageType').value;
-console.log(pageType);
+
 // Gestion du select pour choisir le nombre de patients ou rdv à afficher
 
 let select = document.querySelector('#limit');
@@ -36,7 +36,7 @@ delBtn.forEach(element => {
                 document.getElementById('confirm2').setAttribute('href', location2);
                 break;
             default:
-                document.location.href='index.php';
+                document.location.href='/index.php';
         }
     })
 })
