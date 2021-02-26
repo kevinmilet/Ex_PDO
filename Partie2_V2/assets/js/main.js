@@ -18,14 +18,12 @@ if (select != undefined) {
 
 let delBtn = document.querySelectorAll('.del-btn');
 
-
 delBtn.forEach(element => {
 
     let dataId = element.getAttribute('data');
 
     element.addEventListener('click', function(event) {
-        console.log(dataId);
-
+        
         switch (pageType) {
             case '1':
                 let location1 = '/controllers/liste-patientsCtrl.php?id=' + dataId + '=&delete=1';
