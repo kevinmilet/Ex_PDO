@@ -79,21 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id']) && isset($_GET['de
 }
 //*****************************************************************************************************
 
-
-//*****************************************************************************************************
-//
-// recherche de patients
-//
-//*****************************************************************************************************
-// if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['search'])) {
-
-//     $search = trim(filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
-
-//     $patientsList = Patient::searchPatient($search);
-// }
-//*****************************************************************************************************
-
-
 // Affichage des vues
 include(dirname(__FILE__).'/../views/templates/header.php');
 
