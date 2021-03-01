@@ -102,16 +102,21 @@ class Patient {
     }
 
     // methode listant les patients
-    public static function listPatient($firstpage, $limite) {
+    public static function listPatient($search, $firstpage, $limite) {
 
         $pdo = Database::dbconnect();
 
         $sql = 'SELECT * 
-                FROM `patients` 
+                FROM `patients`
+                WHERE `lastname` 
+                LIKE :search 
+                OR `firstname` 
+                LIKE :search
                 LIMIT :firstpage, :limite;';
         
         try {
             $stmt =$pdo->prepare($sql);
+            $stmt->bindValue(':search', '%'.$search.'%', PDO::PARAM_STR);
             $stmt->bindValue(':firstpage', $firstpage, PDO::PARAM_INT);
             $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
             $stmt->execute();
@@ -186,37 +191,6 @@ class Patient {
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             return $stmt->execute();
 
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
-
-    // methode recherche d'un patient
-    public static function searchPatient($search) {
-
-        $pdo = Database::dbconnect();
-
-        $sql = 'SELECT * 
-                FROM `patients` 
-                WHERE `lastname` 
-                LIKE :search 
-                OR `firstname` 
-                LIKE :search;';
-
-        try {
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindValue(':search', '%'.$search.'%', PDO::PARAM_STR);
-            $stmt->execute();
-            $count = $stmt->rowCount();
-        
-            if ($count != 0) {
-                $result = $stmt->fetchAll();
-                return $result;
-
-            } else {
-                return false;
-            }
-        
         } catch (PDOException $e) {
             return false;
         }

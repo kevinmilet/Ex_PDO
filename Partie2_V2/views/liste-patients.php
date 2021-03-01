@@ -15,7 +15,7 @@ if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE
 
 <form action="" class="row m-3 align-items-center" method="GET">
     <div class="col-auto">
-        <input type="search" class="form-control" name="search" id="search">
+        <input type="search" class="form-control" name="search" id="search" value="<?= $_GET['search'] ?? '' ?>">
     </div>
     <div class="col-auto">
         <button type="submit" class="btn btn-primary">Rechercher</button>

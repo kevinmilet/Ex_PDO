@@ -11,6 +11,10 @@ require_once(dirname(__FILE__).'/../models/Patient.php');
 // Affichage de la liste des patients avec pagination
 //
 //*****************************************************************************************************
+
+// on récupére la valeur du champs search
+$search = trim(filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
+
 if (isset($_GET['page']) && !empty($_GET['page'])) {
     $currentPage = intval(trim(filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT)));
 
@@ -42,7 +46,7 @@ if ($currentPage > $pages) {
 $firstpage = ($currentPage * $limite) - $limite;
 
 // on affiche la liste des patients
-$patientsList = Patient::listPatient($firstpage, $limite);
+$patientsList = Patient::listPatient($search, $firstpage, $limite);
 //*****************************************************************************************************
 
 
@@ -81,12 +85,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id']) && isset($_GET['de
 // recherche de patients
 //
 //*****************************************************************************************************
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['search'])) {
+// if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['search'])) {
 
-    $search = trim(filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
+//     $search = trim(filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
 
-    $patientsList = Patient::searchPatient($search);
-}
+//     $patientsList = Patient::searchPatient($search);
+// }
 //*****************************************************************************************************
 
 
