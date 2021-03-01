@@ -14,6 +14,10 @@ require_once(dirname(__FILE__).'/../models/Patient.php');
 if (isset($_GET['page']) && !empty($_GET['page'])) {
     $currentPage = intval(trim(filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT)));
 
+    if ($currentPage <= 0) {
+        $currentPage = 1;
+    }
+
     }else{
         $currentPage = 1;
         
@@ -28,6 +32,11 @@ $limite = $_SESSION['limit'];
 
 // On détermine le nombre pages qu'il y aura
 $pages = ceil($nbPatients / $limite);
+
+if ($currentPage > $pages) {
+
+    $currentPage = 1;
+}
 
 //  on détermine la première page
 $firstpage = ($currentPage * $limite) - $limite;

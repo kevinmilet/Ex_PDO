@@ -73,9 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($errors)) {
 
         $patient = new Patient($lastname, $firstname, $birthdate, $phone, $mail);
-        $result = $patient->addPatient();
-
-        if ($result === true) {
+        $result = intval($patient->addPatient());
+        
+        if (is_integer($result)) {
             // $feedback = '<div class="alert alert-success">Nouveau patient ajouté</div>';
             header('location: /controllers/liste-patientsCtrl.php?code=1');
 
