@@ -102,7 +102,7 @@ class Patient {
     }
 
     // methode listant les patients
-    public static function listPatient($search, $firstpage, $limite) {
+    public static function listPatient($search = '', $firstpage, $limite) {
 
         $pdo = Database::dbconnect();
 
