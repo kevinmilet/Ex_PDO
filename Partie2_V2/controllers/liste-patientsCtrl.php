@@ -44,6 +44,7 @@ if ($currentPage > $pages) {
 
 //  on détermine la première page
 $firstpage = ($currentPage * $limite) - $limite;
+// $firstpage = $pages * ($currentPage - 1);
 
 // on affiche la liste des patients
 $patientsList = Patient::listPatient($search, $firstpage, $limite);
