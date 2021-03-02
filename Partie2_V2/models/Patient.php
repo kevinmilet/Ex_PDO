@@ -112,7 +112,8 @@ class Patient {
                 LIKE :search 
                 OR `firstname` 
                 LIKE :search
-                LIMIT :firstpage, :limite;';
+                LIMIT :limite 
+                OFFSET :firstpage;';
         
         try {
             $stmt =$pdo->prepare($sql);

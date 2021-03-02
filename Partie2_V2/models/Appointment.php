@@ -73,7 +73,8 @@ class Appointment {
         $sql = 'SELECT `appointments`.`id` AS `idAptmt`, `patients`.`id` AS `IdPatient`, `patients`.`lastname` AS `lastname`, `patients`.`firstname` AS `firstname`, DATE_FORMAT(DATE(`dateHour`), \'%a %e %M %Y\') AS `date`, DATE_FORMAT(TIME(`dateHour`), \'%H:%i\') AS `hour` 
                 FROM `appointments` 
                 LEFT JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` 
-                LIMIT :firstpage, :limite;';
+                LIMIT :limite 
+                OFFSET :firstpage;';
 
         // execution de la requete
         try {
