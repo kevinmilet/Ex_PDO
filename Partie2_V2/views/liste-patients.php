@@ -66,7 +66,7 @@ if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE
             </li>
             <?php for ($page = 1; $page <= $pages; $page++): ?>
                 <li class="page-item <?= ($currentPage == $page) ? "active" : "" ?>">
-                    <a href="?pageType=1&page=<?= $page ?>&limit=<?= $_SESSION['limit'] ?>" class="page-link"><?= $page ?></a>
+                    <a href="?pageType=1&page=<?= $page ?>&limit=<?= $_SESSION['limit'] ?>&search=<?= $search ?>" class="page-link"><?= $page ?></a>
                 </li>
             <?php endfor ?>
             <li class="page-item <?= ($currentPage == $pages) ? "disabled" : "" ?>">

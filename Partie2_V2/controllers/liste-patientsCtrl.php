@@ -28,8 +28,8 @@ if (isset($_GET['page']) && !empty($_GET['page'])) {
 }
 
 // on récupére le nombre de patients et on le convertit en entier
-$result = Patient::nbPatient();
-$nbPatients = intval($result->nb_patients);
+// $result = Patient::nbPatient();
+$nbPatients = Patient::nbPatient();
 
 // on fixe la limite de patients à afficher
 $limite = $_SESSION['limit'];

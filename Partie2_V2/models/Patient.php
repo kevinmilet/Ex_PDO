@@ -83,17 +83,26 @@ class Patient {
     }
 
     // methode donnant le nombre de patients
-    public static function nbPatient() {
+    public static function nbPatient($search = '') {
 
         $pdo = Database::dbconnect();
 
         $sql = 'SELECT COUNT(*) AS `nb_patients` 
-                FROM `patients`;';
+                FROM `patients`
+                WHERE `lastname` LIKE :search
+                OR `firstname` LIKE :search;';
 
         try {
-            $stmt = $pdo->query($sql);
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindValue(':search', '%'.$search.'%', PDO::PARAM_STR);
+            $stmt->execute();
             $result = $stmt->fetch();
-            return $result;
+
+            if ($result) {
+                return intval($result->nb_patients);
+            }
+
+            return 0;
 
         } catch (PDOException $e) {
             return false;
