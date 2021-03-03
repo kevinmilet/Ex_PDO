@@ -48,6 +48,10 @@ $firstpage = ($currentPage * $limite) - $limite;
 
 // on affiche la liste des patients
 $patientsList = Patient::listPatient($search, $firstpage, $limite);
+
+echo json_encode($patientsList);
+
+
 //*****************************************************************************************************
 
 
@@ -77,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id']) && isset($_GET['de
         }
     
     }
+
 }
 //*****************************************************************************************************
 

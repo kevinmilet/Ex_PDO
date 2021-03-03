@@ -37,11 +37,11 @@ if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE
                 <th scope="col">Email</th>
                 <th scope="col"></th>
             </thead>
-            <tbody class="tbody">
+            <tbody>
 
-                <!-- <?php //foreach($patientsList as $patient): ?> -->
+                <?php foreach($patientsList as $patient): ?>
                 <tr>
-                    <!-- <td><a type="button" class="btn btn-primary btn-sm"
+                    <td><a type="button" class="btn btn-primary btn-sm"
                             href="/controllers/profil-patientCtrl.php?id=<?=htmlentities($patient->id)?>"><i
                                 class="far fa-user-edit"></i></a></td>
                     <td><?= htmlentities($patient->id) ?></th>
@@ -52,12 +52,11 @@ if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE
                     <td><?= htmlentities($patient->mail) ?></td>
                     <!-- <td><a href="/controllers/liste-patientsCtrl.php?id=<?=htmlentities($patient->id)?>&delete=1"><i
                                 class="fas fa-minus-circle text-danger"></i></a></td> -->
-                    <!--<td><button type="button" class="btn del-btn" data-mdb-toggle="modal" data-mdb-target="#patient-del-confirm" data="<?=htmlentities($patient->id)?>"><i class="fas fa-minus-circle text-danger"></i></a></td> -->
+                    <td><button type="button" class="btn del-btn" data-mdb-toggle="modal" data-mdb-target="#patient-del-confirm" data="<?=htmlentities($patient->id)?>"><i class="fas fa-minus-circle text-danger"></i></a></td>
                 </tr>
-                <!-- <?php //endforeach ?> -->
+                <?php endforeach ?>
 
             </tbody>
-            
         </table>
     </div>
     <!-- <nav class="pt-3">
@@ -65,11 +64,11 @@ if(!empty($code) || $code = trim(filter_input(INPUT_GET, 'code', FILTER_SANITIZE
             <li class="page-item <?= ($currentPage == 1) ? "disabled" : "" ?>">
                 <a class="page-link" href="?pageType=1&page=<?=$currentPage - 1 ?>&limit=<?= $_SESSION['limit'] ?>" tabindex="-1">Précedent</a>
             </li>
-            <?php for ($page = 1; $page <= $pages; $page++): ?>
+            <?php //for ($page = 1; $page <= $pages; $page++): ?>
                 <li class="page-item <?= ($currentPage == $page) ? "active" : "" ?>">
                     <a href="?pageType=1&page=<?= $page ?>&limit=<?= $_SESSION['limit'] ?>&search=<?= $search ?>" class="page-link"><?= $page ?></a>
                 </li>
-            <?php endfor ?>
+            <?php //endfor ?>
             <li class="page-item <?= ($currentPage == $pages) ? "disabled" : "" ?>">
                 <a class="page-link" href="?pageType=1&page=<?=$currentPage + 1 ?>&limit=<?= $_SESSION['limit'] ?>">Suivant</a>
             </li>
