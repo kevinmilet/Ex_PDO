@@ -30,7 +30,9 @@ if (isset($_GET['page']) && !empty($_GET['page'])) {
 $nbPatients = Patient::nbPatient();
 
 // on fixe la limite de patients à afficher
-$limite = $_SESSION['limit'];
+// $limite = $_SESSION['limit'];
+$limite = 10;
+
 
 // On détermine le nombre pages qu'il y aura
 $pages = ceil($nbPatients / $limite);
